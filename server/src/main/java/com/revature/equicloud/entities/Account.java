@@ -1,4 +1,4 @@
-package com.revature.revportal.entities;
+package com.revature.equicloud.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

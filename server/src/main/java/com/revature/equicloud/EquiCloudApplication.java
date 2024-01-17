@@ -1,13 +1,13 @@
-package com.revature.revportal;
+package com.revature.equicloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RevportalApplication {
+public class EquiCloudApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RevportalApplication.class, args);
+		SpringApplication.run(EquiCloudApplication.class, args);
 	}
 
 }

@@ -1,8 +1,8 @@
-package com.revature.revportal.controllers;
+package com.revature.equicloud.controllers;
 
-import com.revature.revportal.entities.Account;
-import com.revature.revportal.entities.Password;
-import com.revature.revportal.services.AccountService;
+import com.revature.equicloud.entities.Account;
+import com.revature.equicloud.entities.Password;
+import com.revature.equicloud.services.AccountService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

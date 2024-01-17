@@ -1,6 +1,6 @@
-package com.revature.revportal.repositories;
+package com.revature.equicloud.repositories;
 
-import com.revature.revportal.entities.Account;
+import com.revature.equicloud.entities.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

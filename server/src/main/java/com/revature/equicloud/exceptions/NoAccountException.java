@@ -1,4 +1,4 @@
-package com.revature.revportal.exceptions;
+package com.revature.equicloud.exceptions;
 
 public class NoAccountException extends Exception{
     public static String noAccount = "Specified Account Not Found";

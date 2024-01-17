@@ -1,4 +1,4 @@
-package com.revature.revportal.entities;
+package com.revature.equicloud.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

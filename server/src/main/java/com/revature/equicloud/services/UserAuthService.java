@@ -1,9 +1,9 @@
-package com.revature.revportal.services;
+package com.revature.equicloud.services;
 
-import com.revature.revportal.entities.Account;
-import com.revature.revportal.entities.Password;
-import com.revature.revportal.repositories.AccountRepository;
-import com.revature.revportal.repositories.PasswordRepository;
+import com.revature.equicloud.entities.Account;
+import com.revature.equicloud.entities.Password;
+import com.revature.equicloud.repositories.AccountRepository;
+import com.revature.equicloud.repositories.PasswordRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

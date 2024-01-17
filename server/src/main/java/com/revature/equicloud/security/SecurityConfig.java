@@ -1,4 +1,4 @@
-package com.revature.revportal.security;
+package com.revature.equicloud.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

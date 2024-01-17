@@ -1,4 +1,4 @@
-package com.revature.revportal.exceptions;
+package com.revature.equicloud.exceptions;
 
 public class InvalidInputException extends Exception{
     public static String invalidInput = "Invalid input";
