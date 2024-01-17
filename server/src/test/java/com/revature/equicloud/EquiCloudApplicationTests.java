@@ -1,10 +1,10 @@
-package com.revature.revportal;
+package com.revature.equicloud;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RevportalApplicationTests {
+class EquiCloudApplicationTests {
 
 	@Test
 	void contextLoads() {
