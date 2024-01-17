@@ -1,2 +1,2 @@
-# RevPortal
+# EquiCloud
 File Portal Project
