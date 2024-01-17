@@ -3,7 +3,9 @@ package com.revature.equicloud.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity(name = "uploads")
@@ -20,13 +22,14 @@ public class Upload {
     private String path;
 
     @Column(name = "upload_date")
-    private LocalDateTime uploadDate;
+    @CreationTimestamp
+    private Instant uploadDate;
 
 
     public Upload() {
     }
 
-    public Upload(String fileName, String description, String path, LocalDateTime uploadDate) {
+    public Upload(String fileName, String description, String path, Instant uploadDate) {
         this.fileName = fileName;
         this.description = description;
         this.path = path;
@@ -57,11 +60,11 @@ public class Upload {
         this.path = path;
     }
 
-    public LocalDateTime getUploadDate() {
+    public Instant getUploadDate() {
         return uploadDate;
     }
 
-    public void setUploadDate(LocalDateTime uploadDate) {
+    public void setUploadDate(Instant uploadDate) {
         this.uploadDate = uploadDate;
     }
 
