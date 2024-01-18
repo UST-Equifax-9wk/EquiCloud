@@ -27,4 +27,12 @@ public class GCPStorageService {
     public Blob downloadFile(String fileName) {
         return storage.get(BlobId.of("equicloud-storage", fileName));
     }
+
+    public String createFolder(String folderPath) {
+        String folderName = folderPath.endsWith("/") ? folderPath : folderPath + "/";
+        BlobId blobId = BlobId.of("equicloud-storage", folderName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+        storage.create(blobInfo);
+        return "Folder created successfully: " + folderName;
+    }
 }

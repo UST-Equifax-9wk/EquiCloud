@@ -47,5 +47,15 @@ public class GCPStorageController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
                 .body(resource);
     }
+
+    @PostMapping("/create-folder")
+    public ResponseEntity<String> createFolder(@RequestParam("folderPath") String folderPath) {
+        try {
+            String response = cloudStorageService.createFolder(folderPath);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Failed to create folder: " + e.getMessage());
+        }
+    }
 }
 
