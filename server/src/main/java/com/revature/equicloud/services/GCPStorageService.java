@@ -1,5 +1,7 @@
 package com.revature.equicloud.services;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.auth.Credentials;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.WriteChannel;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
@@ -27,13 +31,25 @@ public class GCPStorageService {
     @Autowired
     public GCPStorageService(@Value("${gcp.bucket.name}") String bucketName) {
         this.BUCKET_NAME = bucketName;
-        this.storage = StorageOptions.getDefaultInstance().getService();
+        Credentials credentials = null;
+        try {
+            credentials = GoogleCredentials.fromStream(new FileInputStream("equicloud-08122c442b64.json"));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        this.storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
     }
 
     public String uploadFile(MultipartFile file) throws IOException {
         try {
             BlobId blobId = BlobId.of(BUCKET_NAME, file.getOriginalFilename());
             BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+    
+            
 
             try(WriteChannel writer = storage.writer(blobInfo)) {
                 writer.write(ByteBuffer.wrap(file.getBytes()));
