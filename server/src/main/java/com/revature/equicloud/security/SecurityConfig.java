@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,12 +30,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .httpBasic(withDefaults())
+                .csrf(csrf -> csrf.disable())
+                .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login","/upload", "/download/*",)
-                        .permitAll()
-                        .anyRequest().authenticated()
+                                .requestMatchers("/login", "/upload", "/download/*", "/files")
+                                .permitAll()
+                                .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasicConfigurer ->
                         httpBasicConfigurer.authenticationEntryPoint(new CustomAuthenticationEntryPoint())
@@ -43,9 +44,9 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .logout(logout -> logout
-                        .deleteCookies("JSESSIONID")
-                        .invalidateHttpSession(true)
-                        .permitAll()
+                                .deleteCookies("JSESSIONID")
+                                .invalidateHttpSession(true)
+                                .permitAll()
                 );
 
         return http.build();
