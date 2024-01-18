@@ -1,5 +1,31 @@
 <p>list-files works!</p>
-<ng-container *ngFor="let file of files">
-    <div>name: {{file.fileName}}</div>
-
+<label>Search by file name</label>
+<input type="text" [(ngModel)]="search">
+<label>Sort By</label>
+<select name="sort" [(ngModel)]="sortBy">
+    <option></option>
+    <option>file name</option>
+    <option>upload date</option>
+</select>
+<select name="" [(ngModel)]="ascending">
+    <option value="true">Ascending</option>
+    <option value="false">Descending</option>
+</select>
+<button id="search" (click)="refresh()">Submit</button>
+<br><br>
+<ng-container *ngFor="let folder of folders;index as i">
+    <button class="folderButton" (click)="show(i)">{{folder}}</button>
+    <ng-container *ngIf="visible[i]">
+        <ng-container *ngFor="let file of files[i]">
+        <div class="fileList">
+            <div class="fileLabel">File Name: <span class="fileName">{{file.fileName}}</span></div>
+            <div class="fileLabel">Description: <span class="fileDescription">{{file.description}}</span></div>
+            <div class="fileLabel">Upload Time: <span class="fileDate">{{file.uploadDate | date:'hh:mm:ss aa'}} &nbsp;On&nbsp; {{file.uploadDate | date}} </span></div>
+            <button class="downloadButton" (click)="download(file)">Download</button>
+        </div>
+        </ng-container>
+    </ng-container>        
+    <br><br>
 </ng-container>
+
+

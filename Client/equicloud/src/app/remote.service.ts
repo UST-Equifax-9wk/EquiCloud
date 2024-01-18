@@ -26,8 +26,8 @@ export class RemoteService {
 
 
 export interface Upload {
-  fileName : String
-  fileDescription : String
-  filePath : String
-  timeCreated?: String
+  fileName : string
+  description : string
+  path : string
+  uploadDate?: string
 }
