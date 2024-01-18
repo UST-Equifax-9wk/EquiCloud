@@ -11,7 +11,7 @@ public class EquiCloudApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(EquiCloudApplication.class, args);
-		
+
 	}
 
 }

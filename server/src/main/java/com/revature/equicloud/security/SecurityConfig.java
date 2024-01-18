@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .httpBasic(withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login")
+                        .requestMatchers("/login","/files")
                         .permitAll()
                         .anyRequest().authenticated()
                 )
