@@ -3,6 +3,8 @@ package com.revature.equicloud.services;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,9 +19,15 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class GCPStorageService {
 
-    private final Storage storage = StorageOptions.getDefaultInstance().getService();
+    private final Storage storage;
 
-    private static final String BUCKET_NAME = "equicloud-storage";
+    private final String BUCKET_NAME;
+
+    @Autowired
+    public GCPStorageService(@Value("${gcp.bucket.name}") String bucketName) {
+        this.BUCKET_NAME = bucketName;
+        this.storage = StorageOptions.getDefaultInstance().getService();
+    }
 
     public String uploadFile(MultipartFile file) throws IOException {
         try {
