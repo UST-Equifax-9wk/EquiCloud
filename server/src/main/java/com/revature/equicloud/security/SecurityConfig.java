@@ -12,8 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -32,12 +30,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .httpBasic(withDefaults())
+                .csrf(csrf -> csrf.disable())
+                .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login","/files")
-                        .permitAll()
-                        .anyRequest().authenticated()
+                                .requestMatchers("/login", "/upload", "/download/*", "/files", "/create-folder")
+                                .permitAll()
+                                .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasicConfigurer ->
                         httpBasicConfigurer.authenticationEntryPoint(new CustomAuthenticationEntryPoint())
@@ -46,9 +44,9 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .logout(logout -> logout
-                        .deleteCookies("JSESSIONID")
-                        .invalidateHttpSession(true)
-                        .permitAll()
+                                .deleteCookies("JSESSIONID")
+                                .invalidateHttpSession(true)
+                                .permitAll()
                 );
 
         return http.build();
