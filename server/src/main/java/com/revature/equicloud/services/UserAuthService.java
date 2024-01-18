@@ -32,18 +32,10 @@ public class UserAuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        Password password = passwordRepository.findByAccountName(username)
-//                .orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
-//
-//        Account account = accountRepository.findByAccountName(username);
-//        List<GrantedAuthority> authorities = new ArrayList<>();
-//        if (account.isDistributorFlag()) {
-//            authorities.add(new SimpleGrantedAuthority("ROLE_DISTRIBUTOR"));
-//        } else {
-//            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-//        }
-//        return new User(password.getAccountName(), password.getPassword(), authorities);
-        return null;
+        Password password = passwordRepository.findByAccountName(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found:"));
+
+        return new User(password.getAccountName(), password.getPassword(), new ArrayList<>());
     }
 
 }

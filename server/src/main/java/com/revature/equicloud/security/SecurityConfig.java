@@ -33,7 +33,6 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .httpBasic(withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login")
                         .permitAll()
@@ -42,12 +41,7 @@ public class SecurityConfig {
                 .httpBasic(httpBasicConfigurer ->
                         httpBasicConfigurer.authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 )
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .and()
                 .logout(logout -> logout
-                        .deleteCookies("JSESSIONID")
-                        .invalidateHttpSession(true)
                         .permitAll()
                 );
 
