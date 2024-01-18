@@ -15,6 +15,7 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageException;
 import com.google.cloud.storage.StorageOptions;
+import com.revature.equicloud.exceptions.StorageOperationException;
 
 @Service
 public class GCPStorageService {
@@ -43,17 +44,14 @@ public class GCPStorageService {
         }
     }
 
-    public Blob downloadFile(String fileName) throws IOException {
-        try {
-            Blob blob = storage.get(BlobId.of(BUCKET_NAME, fileName));
-            if (blob == null || !blob.exists()) {
-                throw new IOException("File not found in GCP Storage: " + fileName);
-            }
-            return blob;
-        } catch (StorageException e) {
-            throw new IOException("GCP Storage exception during file download: " + e.getMessage(), e);
+    public Blob downloadFile(String filePath) throws IOException {
+        Blob blob = storage.get(BlobId.of(BUCKET_NAME, filePath));
+        if (blob == null || !blob.exists()) {
+            throw new IOException("File not found in GCP Storage: " + filePath);
         }
+        return blob;
     }
+    
 
     public String createFolder(String folderPath) throws IOException {
         try {
@@ -64,6 +62,18 @@ public class GCPStorageService {
             return "Folder created successfully: " + folderName;
         } catch (StorageException e) {
             throw new IOException("GCP Storage exception during folder creation: " + e.getMessage(), e);
+        }
+    }
+
+    public void deleteFile(String filePath) throws StorageOperationException{
+        try{
+            BlobId blobId = BlobId.of(BUCKET_NAME, filePath);
+            boolean deleted = storage.delete(blobId);
+            if(!deleted){
+                throw new StorageOperationException("File not found in GCP Storage: " + filePath);
+            }
+        } catch (StorageException e) {
+            throw new StorageOperationException("GCP Storage exception during file deletion: " + e.getMessage(), e);
         }
     }
 }
