@@ -13,7 +13,7 @@ export class RemoteService {
     this.baseUrl = "http://localhost:8080"
    }
 
-   uploadMetadata(upload : Upload) { //Maybe add in a username request param once that gets implemented in the controller
+   upload(upload : Upload) { //Maybe add in a username request param once that gets implemented in the controller
     return this.httpClient.post(this.baseUrl+`/upload`, JSON.stringify(upload),
     {
       observe: 'response',
@@ -22,18 +22,19 @@ export class RemoteService {
         'Content-Type' : 'application/json'
       })
     })
-   }
-
-  //  uploadFile(file : File) {
-  //   return this.httpClient.post(this.baseUrl+`/upload`, file,
-  //   {
-  //     observe: 'response',
-  //     withCredentials: true,
-  //     headers: new HttpHeaders({
-  //       'Content-Type' : 'application/json'
-  //     })
-  //   })
-  //  }
+  }
+  
+   getAllFiles(){
+    return this.httpClient.get(this.baseUrl+"/files",
+    {
+      observe: 'response',
+      withCredentials: true,
+      headers: new HttpHeaders({
+        'Content-Type' : 'application/json'
+      })
+    }
+    )
+  }
 }
 
 
