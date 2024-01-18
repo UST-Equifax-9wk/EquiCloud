@@ -1,0 +1,16 @@
+<header>
+    <h1>Select a file to upload</h1>
+</header>
+
+<input type="file" class="file-upload" (change)="onFileSelected($event)">
+<br>
+
+<input type="text" id="fileName" [(ngModel)] = "fileName" placeholder="File name"  pattern="[a-zA-Z.\-_]+"
+       title="Only letters, underscores(_), and hyphens(-) are allowed in file names. You cannot have more than one underscore or hyphen in a row."
+       onkeypress="return /[a-zA-Z.\-_\s]/i.test(event.key)">
+<br>
+
+<input type="text" id="fileDescription" [(ngModel)] = "fileDescription" placeholder="Description" style="width: 50%; height: 10vh; vertical-align: top;">
+<br>
+
+<button (click)="upload()">Upload file</button>
