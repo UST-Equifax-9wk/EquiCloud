@@ -1,12 +1,14 @@
 package com.revature.equicloud.services;
 
-import com.revature.equicloud.entities.Upload;
-import com.revature.equicloud.repositories.UploadRepository;
-import jakarta.transaction.Transactional;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.revature.equicloud.entities.Upload;
+import com.revature.equicloud.repositories.UploadRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 @Transactional(Transactional.TxType.REQUIRED)
@@ -16,6 +18,10 @@ public class UploadService {
     @Autowired
     UploadService(UploadRepository uploadRepository){
         this.uploadRepository=uploadRepository;
+    }
+
+    public Upload save(Upload upload){
+        return uploadRepository.save(upload);
     }
 
     public List<Upload> findAll(){

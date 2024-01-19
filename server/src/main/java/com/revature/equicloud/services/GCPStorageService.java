@@ -1,13 +1,15 @@
 package com.revature.equicloud.services;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.auth.Credentials;
@@ -19,44 +21,50 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageException;
 import com.google.cloud.storage.StorageOptions;
+import com.revature.equicloud.entities.Upload;
 import com.revature.equicloud.exceptions.StorageOperationException;
 
 @Service
 public class GCPStorageService {
 
-    private final Storage storage;
+    private Storage storage;
 
+    private final UploadService uploadService;
     private final String BUCKET_NAME;
 
+    private final String filePath;
+
     @Autowired
-    public GCPStorageService(@Value("${gcp.bucket.name}") String bucketName) {
+    public GCPStorageService(@Value("${gcp.bucket.name}") String bucketName, @Value("${gcp.config.file.path}") String filePath, ResourceLoader resourceLoader, UploadService uploadService) {
         this.BUCKET_NAME = bucketName;
-        Credentials credentials = null;
-        try {
-            credentials = GoogleCredentials.fromStream(new FileInputStream("equicloud-08122c442b64.json"));
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        this.uploadService = uploadService;
+        this.filePath = filePath;
+        try{
+            Resource resource = resourceLoader.getResource("classpath:" + filePath);
+            Credentials credentials = GoogleCredentials.fromStream(resource.getInputStream());
+            this.storage = StorageOptions.newBuilder().setProjectId("equicloud").setCredentials(credentials).build().getService();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            this.storage = StorageOptions.newBuilder().build().getService();
+            System.out.println("Failed to load GCP credentials file. Using default credentials." + e.getMessage());
         }
-        this.storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
     }
 
-    public String uploadFile(MultipartFile file) throws IOException {
-        try {
-            BlobId blobId = BlobId.of(BUCKET_NAME, file.getOriginalFilename());
-            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
     
-            
+
+    public String uploadFile(MultipartFile file, String filePath, String description) throws IOException {
+        try {
+            BlobId blobId = BlobId.of(BUCKET_NAME, filePath);
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 
             try(WriteChannel writer = storage.writer(blobInfo)) {
                 writer.write(ByteBuffer.wrap(file.getBytes()));
             }
-            return "File uploaded successfully: " + file.getOriginalFilename();
+            String fileName = filePath.split("/")[filePath.split("/").length - 1];
+            Upload upload = new Upload(fileName, description, filePath, null);
+            uploadService.save(upload);
+            return "File uploaded successfully: " + fileName;
         } catch (StorageException e) {
-            throw new IOException("GCP Storage exception during file upload: " + e.getMessage(), e);
+            throw new IOException("GCP Storage exception during file upload: " +  e.getMessage(), e);
         }
     }
 
@@ -92,4 +100,10 @@ public class GCPStorageService {
             throw new StorageOperationException("GCP Storage exception during file deletion: " + e.getMessage(), e);
         }
     }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<String> handleIOException(IOException e) {
+        return ResponseEntity.internalServerError().body(e.getMessage());
+    }
+    
 }

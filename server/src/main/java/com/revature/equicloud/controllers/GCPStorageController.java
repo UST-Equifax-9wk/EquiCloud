@@ -30,9 +30,9 @@ public class GCPStorageController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("fileName") String fileName, @RequestParam("description") String description) {
         try {
-            String response = cloudStorageService.uploadFile(file);
+            String response = cloudStorageService.uploadFile(file, fileName, description);
             return ResponseEntity.ok(response);
         } catch (IOException e) {
             // Log the exception details (consider using a logger)
