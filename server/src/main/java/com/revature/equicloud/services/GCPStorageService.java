@@ -24,6 +24,9 @@ import com.google.cloud.storage.StorageOptions;
 import com.revature.equicloud.entities.Upload;
 import com.revature.equicloud.exceptions.StorageOperationException;
 
+/**
+ * Service class for interacting with Google Cloud Storage.
+ */
 @Service
 public class GCPStorageService {
 
@@ -34,6 +37,14 @@ public class GCPStorageService {
 
     private final String filePath;
 
+    /**
+     * Constructs a new GCPStorageService with the specified bucket name, file path, resource loader, and upload service.
+     * 
+     * @param bucketName the name of the Google Cloud Storage bucket
+     * @param filePath the file path to the Google Cloud Platform (GCP) credentials file
+     * @param resourceLoader the resource loader used to load the GCP credentials file
+     * @param uploadService the upload service used to save upload information
+     */
     @Autowired
     public GCPStorageService(@Value("${gcp.bucket.name}") String bucketName, @Value("${gcp.config.file.path}") String filePath, ResourceLoader resourceLoader, UploadService uploadService) {
         this.BUCKET_NAME = bucketName;
@@ -45,12 +56,19 @@ public class GCPStorageService {
             this.storage = StorageOptions.newBuilder().setProjectId("equicloud").setCredentials(credentials).build().getService();
         } catch (IOException e) {
             this.storage = StorageOptions.newBuilder().build().getService();
-            System.out.println("Failed to load GCP credentials file. Using default credentials." + e.getMessage());
+            //System.out.println("Failed to load GCP credentials file. Using default credentials." + e.getMessage());
         }
     }
 
-    
-
+    /**
+     * Uploads a file to Google Cloud Storage.
+     * 
+     * @param file the file to upload
+     * @param filePath the file path in the Google Cloud Storage bucket
+     * @param description the description of the file
+     * @return a message indicating the success of the file upload
+     * @throws IOException if an I/O error occurs during the file upload
+     */
     public String uploadFile(MultipartFile file, String filePath, String description) throws IOException {
         try {
             BlobId blobId = BlobId.of(BUCKET_NAME, filePath);
@@ -68,6 +86,13 @@ public class GCPStorageService {
         }
     }
 
+    /**
+     * Downloads a file from Google Cloud Storage.
+     * 
+     * @param filePath the file path in the Google Cloud Storage bucket
+     * @return the downloaded Blob object
+     * @throws IOException if an I/O error occurs during the file download
+     */
     public Blob downloadFile(String filePath) throws IOException {
         Blob blob = storage.get(BlobId.of(BUCKET_NAME, filePath));
         if (blob == null || !blob.exists()) {
@@ -77,6 +102,13 @@ public class GCPStorageService {
     }
     
 
+    /**
+     * Creates a folder in Google Cloud Storage.
+     * 
+     * @param folderPath the folder path in the Google Cloud Storage bucket
+     * @return a message indicating the success of the folder creation
+     * @throws IOException if an I/O error occurs during the folder creation
+     */
     public String createFolder(String folderPath) throws IOException {
         try {
             String folderName = folderPath.endsWith("/") ? folderPath : folderPath + "/";
@@ -89,8 +121,14 @@ public class GCPStorageService {
         }
     }
 
-    public void deleteFile(String filePath) throws StorageOperationException{
-        try{
+    /**
+     * Deletes a file from Google Cloud Storage.
+     * 
+     * @param filePath the file path in the Google Cloud Storage bucket
+     * @throws StorageOperationException if an error occurs during the file deletion
+     */
+    public void deleteFile(String filePath) throws StorageOperationException {
+        try {
             BlobId blobId = BlobId.of(BUCKET_NAME, filePath);
             boolean deleted = storage.delete(blobId);
             if(!deleted){
@@ -101,6 +139,12 @@ public class GCPStorageService {
         }
     }
 
+    /**
+     * Exception handler for IOException.
+     * 
+     * @param e the IOException
+     * @return a ResponseEntity containing the error message
+     */
     @ExceptionHandler(IOException.class)
     public ResponseEntity<String> handleIOException(IOException e) {
         return ResponseEntity.internalServerError().body(e.getMessage());
