@@ -1,6 +1,6 @@
 package com.revature.equicloud.security;
 
-import com.revature.equicloud.services.UserAuthService;
+import com.revature.equicloud.services.UserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,14 +11,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+
+
+@Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserAuthService userAuthService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -33,15 +38,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         final String username;
         final String jwt;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
             jwt = authorizationHeader.substring(7);
             username = jwtUtil.extractUsername(jwt);
-
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userAuthService.loadUserByUsername(username);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (jwtUtil.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
@@ -50,6 +54,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
+
+
         filterChain.doFilter(request, response);
     }
 }

@@ -27,6 +27,13 @@ public class Account {
     public Account() {
     }
 
+    public Account(String accountName, String firstName, String lastName, String email) {
+        this.accountName = accountName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
     public Account(int accountId, String accountName, String firstName, String lastName, String email) {
         this.accountId = accountId;
         this.accountName = accountName;
