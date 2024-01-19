@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,6 +25,13 @@ public class UploadController {
     @GetMapping("/files")
     public ResponseEntity<List<Upload>> getAllFiles(){
         List<Upload> list = uploadService.findAll();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/files/{containing}")
+    public ResponseEntity<List<Upload>> getContaining(@PathVariable String containing){
+        if(containing==null)return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        List<Upload> list = uploadService.findContaining(containing);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

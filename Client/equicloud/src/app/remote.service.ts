@@ -22,6 +22,17 @@ export class RemoteService {
     }
     )
   }
+
+  getFilesContaining(containing:string){
+    return this.httpClient.get(this.baseUrl+"/files/"+containing,
+    {
+      observe: 'response',
+      withCredentials: true,
+      headers: new HttpHeaders({
+        'Content-Type' : 'application/json'
+      })
+    })
+  }
 }
 
 

@@ -22,4 +22,8 @@ public class UploadService {
         return uploadRepository.findAll();
     }
 
+    public List<Upload> findContaining(String containing){
+        return uploadRepository.findByFileNameContaining(containing);
+    }
+
 }

@@ -1,3 +1,46 @@
+<!-- <p>list-files works!</p>
+<label>Search by file name</label>
+<input type="text" [(ngModel)]="search">
+<label>Sort By</label>
+<select name="sort" [(ngModel)]="sortBy">
+    <option></option>
+    <option>file name</option>
+    <option>upload date</option>
+</select>
+<select [(ngModel)]="ascending">
+    <option [ngValue]="true">Ascending</option>
+    <option [ngValue]="false">Descending</option>
+</select>
+<button id="search" (click)="refresh()">Submit</button>
+<br><br>
+<ng-container *ngFor="let folder of folders">
+    <ng-container *ngTemplateOutlet="Recursion; context: folder">
+</ng-container>
+</ng-container>
+
+
+
+<ng-template #Recursion let-folders>
+    <div>test {{folders.folder}}</div>
+    <ng-container *ngFor="let folder of folders;index as i">
+        <div>test2</div>
+        <button class="folderButton" (click)="show(i)">{{folder.folder}}</button>
+        <ng-container *ngIf="visible[i]">
+            <ng-container *ngTemplateOutlet="Recursion; context: folders.nested"></ng-container>
+            <ng-container *ngFor="let file of folder.files">
+            <div class="fileList">
+                <div class="fileLabel">File Name: <span class="fileName">{{file.fileName}}</span></div>
+                <div class="fileLabel">Description: <span class="fileDescription">{{file.description}}</span></div>
+                <div class="fileLabel">Upload Time: <span class="fileDate">{{file.uploadDate | date:'hh:mm:ss aa'}} &nbsp;On&nbsp; {{file.uploadDate | date}} </span></div>
+                <button class="downloadButton" (click)="download(file)">Download</button>
+            </div>
+            </ng-container>
+        </ng-container>        
+        <br><br>
+    </ng-container>
+</ng-template> -->
+
+
 <p>list-files works!</p>
 <label>Search by file name</label>
 <input type="text" [(ngModel)]="search">
@@ -7,25 +50,40 @@
     <option>file name</option>
     <option>upload date</option>
 </select>
-<select name="" [(ngModel)]="ascending">
-    <option value="true">Ascending</option>
-    <option value="false">Descending</option>
+<select [(ngModel)]="ascending">
+    <option [ngValue]="true">Ascending</option>
+    <option [ngValue]="false">Descending</option>
 </select>
 <button id="search" (click)="refresh()">Submit</button>
 <br><br>
-<ng-container *ngFor="let folder of folders;index as i">
-    <button class="folderButton" (click)="show(i)">{{folder}}</button>
-    <ng-container *ngIf="visible[i]">
-        <ng-container *ngFor="let file of files[i]">
-        <div class="fileList">
-            <div class="fileLabel">File Name: <span class="fileName">{{file.fileName}}</span></div>
-            <div class="fileLabel">Description: <span class="fileDescription">{{file.description}}</span></div>
-            <div class="fileLabel">Upload Time: <span class="fileDate">{{file.uploadDate | date:'hh:mm:ss aa'}} &nbsp;On&nbsp; {{file.uploadDate | date}} </span></div>
-            <button class="downloadButton" (click)="download(file)">Download</button>
-        </div>
-        </ng-container>
-    </ng-container>        
-    <br><br>
-</ng-container>
-
-
+    <ng-container *ngFor="let folder of folders;index as i">
+                
+        <button class="folderButton" (click)="show(folder)">{{folder.folder}}</button>
+                <ng-container *ngIf="folder.visible">
+                    <ng-container *ngFor="let nest of folder.nested;index as j">
+                        <button class="folderButton" (click)="show(nest)">{{nest.folder}}</button>
+                        <ng-container *ngIf="nest.visible">
+                            <ng-container *ngFor="let file of nest.files">
+                            <div class="fileList">
+                                <div class="fileLabel">File Name: <span class="fileName">{{file.fileName}}</span></div>
+                                <div class="fileLabel">Description: <span class="fileDescription">{{file.description}}</span></div>
+                                <div class="fileLabel">Upload Time: <span class="fileDate">{{file.uploadDate | date:'hh:mm:ss aa'}} &nbsp;On&nbsp; {{file.uploadDate | date}} </span></div>
+                                <button class="downloadButton" (click)="download(file)">Download</button>
+                            </div>
+                            </ng-container>
+                        </ng-container>        
+                        <br><br>
+                    </ng-container>
+                </ng-container>
+        <ng-container *ngIf="folder.visible">
+            <ng-container *ngFor="let file of folder.files">
+            <div class="fileList">
+                <div class="fileLabel">File Name: <span class="fileName">{{file.fileName}}</span></div>
+                <div class="fileLabel">Description: <span class="fileDescription">{{file.description}}</span></div>
+                <div class="fileLabel">Upload Time: <span class="fileDate">{{file.uploadDate | date:'hh:mm:ss aa'}} &nbsp;On&nbsp; {{file.uploadDate | date}} </span></div>
+                <button class="downloadButton" (click)="download(file)">Download</button>
+            </div>
+            </ng-container>
+        </ng-container>        
+        <br><br>
+    </ng-container>
