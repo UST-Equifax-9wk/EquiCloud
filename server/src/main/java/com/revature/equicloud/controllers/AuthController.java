@@ -1,6 +1,7 @@
 package com.revature.equicloud.controllers;
 
 import com.revature.equicloud.dtos.AuthenticationRequest;
+import com.revature.equicloud.dtos.AuthenticationResponse;
 import com.revature.equicloud.dtos.RegisterRequest;
 import com.revature.equicloud.services.AccountService;
 import com.revature.equicloud.services.AuthenticationService;
@@ -35,9 +36,10 @@ public class AuthController {
         return ResponseEntity.ok(token);
     }
     @PostMapping("/login")
-    public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         String token = authenticationService.authenticateUser(request);
-        return ResponseEntity.ok(token);
+        AuthenticationResponse authResponse = new AuthenticationResponse(token);
+        return ResponseEntity.ok(authResponse);
     }
 
 
@@ -51,5 +53,10 @@ public class AuthController {
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String handleBadCred(BadCredentialsException ex) { return ex.getMessage(); }
+
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public String handleIncorrectUsernamePassword(IllegalArgumentException ex) { return ex.getMessage(); }
 
 }
