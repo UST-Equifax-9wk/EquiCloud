@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RemoteService } from '../remote.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,8 @@ export class LoginComponent {
   accountName: string = '';
   password: string = '';
 
-  constructor (private remoteService: RemoteService) {}
+  constructor (private remoteService: RemoteService,
+    private router:Router) {}
 
   login() {
     console.log("accountName: " + this.accountName)
@@ -45,4 +46,8 @@ export class LoginComponent {
         }
       )
     }
+    logout(){
+      localStorage.removeItem('jwtToken');
+      this.router.navigate(['/login']);
+      }
 }
