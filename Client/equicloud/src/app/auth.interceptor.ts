@@ -4,7 +4,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
 
   const loginUrl = 'http://localhost:8080/auth/login'; 
-  if (req.url === loginUrl) {
+  const registerUrl = 'http://localhost:8080/auth/register'
+  if (req.url === loginUrl ||
+    req.url === registerUrl ) {
     return next(req);
   }
   const token = localStorage.getItem('jwtToken');

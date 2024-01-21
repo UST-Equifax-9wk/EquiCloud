@@ -35,6 +35,10 @@ export class RemoteService {
     )
   }
 
+  register(account : AccountDto) {
+    return this.httpClient.post(this.baseUrl + "/auth/register", account)
+  }
+
   test() {
     return this.httpClient.get<string>(this.baseUrl+"/test",
     { responseType: 'text' as 'json' }
@@ -43,6 +47,14 @@ export class RemoteService {
   
 }
 
+
+export interface AccountDto {
+  accountName : String
+  firstName : String
+  lastName : String
+  password : String
+  email : String
+}
 
 export interface Upload {
   fileName : String
