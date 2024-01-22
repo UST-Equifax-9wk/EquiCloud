@@ -17,13 +17,11 @@ import org.springframework.stereotype.Service;
 public class AccountService {
     private PasswordRepository passwordRepository;
     private AccountRepository accountRepository;
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    AccountService(PasswordRepository passwordRepository, AccountRepository accountRepository, PasswordEncoder passwordEncoder){
+    AccountService(PasswordRepository passwordRepository, AccountRepository accountRepository){
         this.accountRepository=accountRepository;
         this.passwordRepository=passwordRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
 

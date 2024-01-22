@@ -1,0 +1,18 @@
+
+<div>
+<form autocomplete="off" (ngSubmit)="login()">
+    <div>
+      <label for="username">Username </label>
+      <input type="text" name="userName" [(ngModel)]="accountName" placeholder="Username">
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" name="passWord" [(ngModel)]="password" placeholder="Password">
+    </div>
+    <button type="submit">Login </button>
+    <button type="button" (click)="test()">Test</button>
+    <button type="button" (click)="logout()">Logout</button>
+    <a routerLink="/register"> Register </a>
+
+</form>
+</div>

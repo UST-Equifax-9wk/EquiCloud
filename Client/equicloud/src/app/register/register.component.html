@@ -1,0 +1,26 @@
+<div>
+    <p>Registration</p>
+    <form autocomplete="off" name="form" (ngSubmit)="register()">
+           <label>Firstname </label>
+           <input type="text" [(ngModel)]= "firstName" name="firstName"
+                  placeholder="Firstname" 
+                  >
+           <label>Lastname </label>
+           <input type="text" [(ngModel)]="lastName" name="lastName"
+                  placeholder="Lastname">
+
+           <label>Username </label>
+           <input type="text" [(ngModel)]="accountName" name="userName"
+                  placeholder="Username">
+           <label>Password </label>
+           <input type="password" [(ngModel)]="password" name="password"
+                  placeholder="Password">
+           <label>Email </label>
+           <input type="text" [(ngModel)]="email" name="email"
+                  placeholder="Email" >
+           <button type="submit" >Register</button>
+           <hr>
+           <a routerLink="">Back to Login</a>
+    
+    </form>
+</div>
