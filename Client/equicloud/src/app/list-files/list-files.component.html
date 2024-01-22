@@ -39,7 +39,7 @@
                     <div class="fileLabel">File Name: <span class="fileName">{{file.fileName}}</span></div>
                     <div class="fileLabel">Description: <span class="fileDescription">{{file.description}}</span></div>
                     <div class="fileLabel">Upload Time: <span class="fileDate">{{file.uploadDate | date:'hh:mm:ss aa'}} &nbsp;On&nbsp; {{file.uploadDate | date}} </span></div>
-                    <button class="downloadButton" (click)="download(file)">Download</button>
+                    <button class="downloadButton" (click)="download(file.fileName)">Download</button>
                 </div>
             </ng-container>                        
       
@@ -56,7 +56,7 @@
                                     <div class="fileLabel">File Name: <span class="fileName">{{file.fileName}}</span></div>
                                     <div class="fileLabel">Description: <span class="fileDescription">{{file.description}}</span></div>
                                     <div class="fileLabel">Upload Time: <span class="fileDate">{{file.uploadDate | date:'hh:mm:ss aa'}} &nbsp;On&nbsp; {{file.uploadDate | date}} </span></div>
-                                    <button class="downloadButton" (click)="download(file)">Download</button>
+                                    <button class="downloadButton" (click)="download(file.fileName)">Download</button>
                                 </div>
                             </ng-container>
                         </ng-container>        

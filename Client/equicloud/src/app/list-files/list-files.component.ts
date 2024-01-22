@@ -3,6 +3,7 @@ import { RemoteService, Upload } from '../remote.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DownloadfileService } from '../downloadfile.service';
 
 @Component({
   selector: 'app-list-files',
@@ -19,9 +20,11 @@ export class ListFilesComponent {
   sortBy="Alphabetical";
   ascending=true;
   remote:RemoteService;
+  downloadFileService:DownloadfileService;
 
-  constructor(remote:RemoteService){      
+  constructor(remote:RemoteService, downloadServiceService:DownloadfileService){      
     this.remote=remote;
+    this.downloadFileService=downloadServiceService;
     if(localStorage.getItem("jwtToken")==null){
       window.location.replace("login")
     }
@@ -39,10 +42,25 @@ export class ListFilesComponent {
     
   }
 
+  download(fileName:string){
+    this.downloadFileService.downloadFile(fileName).subscribe({
+      next:(data)=> {
 
-  download(file:Upload){
-    alert("download not implemented.");
-    console.log(file);
+        const blob: Blob = data.body as Blob;
+
+        const downloadLink = document.createElement('a');downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = fileName;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
+        console.log(blob);
+      },
+      error:(error:HttpErrorResponse)=> {
+        alert("Error cannot retrieve file: " + fileName);
+        console.log(error);
+      }
+    })
   }
 
 

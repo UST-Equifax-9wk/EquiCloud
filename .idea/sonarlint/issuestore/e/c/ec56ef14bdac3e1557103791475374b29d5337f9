@@ -1,0 +1,12 @@
+
+V	java:S125 "<This block of commented-out lines of code should be removed.(¼è÷ïøÿÿÿÿ
+‡
+java:S1128"lRemove this unused import 'org.springframework.security.authentication.UsernamePasswordAuthenticationToken'.(ÖÆ„Ùüÿÿÿÿ
+c
+java:S1128"MRemove this unused import 'org.springframework.security.core.Authentication'.(ñıÓ“
+r
+java:S1128"\Remove this unused import 'org.springframework.security.core.context.SecurityContextHolder'.(ŒÄæë
+T
+java:S1068"9Remove this unused "authenticationManager" private field.(’ûêøÿÿÿÿ
+M
+java:S1068"2Remove this unused "accountService" private field.(çó³ƒüÿÿÿÿ
