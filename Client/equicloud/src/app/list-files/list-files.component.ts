@@ -19,8 +19,13 @@ export class ListFilesComponent {
   sortBy="Alphabetical";
   ascending=true;
   remote:RemoteService;
-  constructor(remote:RemoteService){
+
+  constructor(remote:RemoteService){      
     this.remote=remote;
+    if(localStorage.getItem("jwtToken")==null){
+      window.location.replace("login")
+    }
+    else{
     this.remote.getAllFiles().subscribe({
       next:(data)=>{
         this.populate(data,false)        
@@ -30,6 +35,8 @@ export class ListFilesComponent {
         console.log(error);
       }
     }) 
+    }
+    
   }
 
 
@@ -72,12 +79,6 @@ export class ListFilesComponent {
         this.folders.push(newFolder)
         parentFolder=newFolder;
       }
-
-      // let navFolder:Folder={
-      //   folder: "",
-      //   nested: [],
-      //   files: []
-      // };
       for(let i=1;i<path.length;i++){
         let noParent=true;        
         if(i!=path.length-1){
@@ -103,26 +104,8 @@ export class ListFilesComponent {
         else{
           parentFolder.files.push(upload)
         }
-      }
-
-      // for(let folder of this.folders){
-      //   if(folder.folder==path[0]){
-      //     push=false;
-      //     folder.files.push(upload)
-      //   }
-      // }
-      // if(push){
-      //   let newFolder:Folder={
-      //     folder: path[0],
-      //     nested: [],
-      //     files: []
-      //   };
-      //   newFolder.files.push(upload)
-      //   this.folders.push(newFolder)
-      //   this.visible.push(vis);
-      // }     
+      }   
     }
-    console.log("folders:", this.folders)
     this.sort();
   }
 
