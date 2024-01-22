@@ -42,9 +42,9 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**")
-                        .permitAll()
-                        .anyRequest().authenticated()
+                    .requestMatchers("/login", "/upload", "/download/*", "/files", "/create-folder", "/files/*","/auth/**")
+                    .permitAll()
+                    .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasicConfigurer ->
                         httpBasicConfigurer.authenticationEntryPoint(new CustomAuthenticationEntryPoint())

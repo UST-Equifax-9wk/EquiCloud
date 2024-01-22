@@ -23,6 +23,16 @@ export class RemoteService {
     )
   }
 
+  getFilesContaining(containing:string){
+    return this.httpClient.get(this.baseUrl+"/files/"+containing,
+    {
+      observe: 'response',
+      withCredentials: true,
+      headers: new HttpHeaders({
+        'Content-Type' : 'application/json'
+      })
+    })
+  }
 
   login(accountName: string, password: string) {
     return this.httpClient.post(this.baseUrl+"/auth/login", {accountName,password},
@@ -59,8 +69,8 @@ export interface AccountDto {
 }
 
 export interface Upload {
-  fileName : String
-  fileDescription : String
-  filePath : String
-  timeCreated?: String
+  fileName : string
+  description : string
+  path : string
+  uploadDate: string
 }

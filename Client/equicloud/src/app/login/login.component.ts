@@ -28,6 +28,7 @@ export class LoginComponent {
           localStorage.setItem('jwtToken', response.body.token);
           console.log("token: " + response.body.token)
         console.log("Authentication Success");
+        window.location.replace("files")
       },
       error => {
         console.log("Authentication failed")
@@ -46,8 +47,5 @@ export class LoginComponent {
         }
       )
     }
-    logout(){
-      localStorage.removeItem('jwtToken');
-      this.router.navigate(['/login']);
-      }
+    
 }
