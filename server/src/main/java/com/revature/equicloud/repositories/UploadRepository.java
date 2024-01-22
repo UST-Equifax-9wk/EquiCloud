@@ -13,6 +13,6 @@ public interface UploadRepository extends JpaRepository<Upload, String> {
 
     public List<Upload> findByFileNameContainingIgnoreCase(String fileName);
 
-    public Upload findByFilePath(String filePath);
+    public Upload findByPath(String filePath);
 
 }

@@ -33,7 +33,7 @@ public class UploadService {
     }
 
     public Upload findByFilePath(String filePath) {
-        return uploadRepository.findByFilePath(filePath);
+        return uploadRepository.findByPath(filePath);
     }
 
     public void delete(Upload upload) {

@@ -1,5 +1,7 @@
 package com.revature.equicloud.security;
 
+import static org.springframework.security.config.http.SessionCreationPolicy.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +42,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/login", "/upload", "/download/*", "/files", "/create-folder", "/files/*","/auth/**")
+                    .requestMatchers("/login", "/upload", "/download*", "/files", "/create-folder", "/files/*","/auth/**")
                     .permitAll()
                     .anyRequest().authenticated()
                 )
