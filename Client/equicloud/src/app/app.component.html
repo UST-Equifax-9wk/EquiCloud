@@ -1,3 +1,18 @@
+<div class="global">
 <h1>EquiCloud</h1>
+<ng-container *ngIf="!loggedIn">
+  <a id="loginLink" routerLink="login">Login</a>
+  <a id="registerLink" routerLink="register">Register</a>
+</ng-container>
+<ng-container *ngIf="loggedIn">    
+  <button type="button" id="logoutButton" (click)="logout()">Logout</button>
+</ng-container>
+
+<div class="poweredBy">
+  Powered By: 
+  <img class="logo" src="../assets/equifaxLogo.png" alt="Equifax Logo" width="100" >
+</div>
+<router-outlet></router-outlet>
+
+</div>
 <app-file-upload></app-file-upload>
-<!--app-list-files></app-list-files-->

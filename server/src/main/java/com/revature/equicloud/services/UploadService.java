@@ -14,6 +14,15 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.revature.equicloud.entities.Upload;
+import com.revature.equicloud.repositories.UploadRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 @Transactional(Transactional.TxType.REQUIRED)
@@ -23,6 +32,10 @@ public class UploadService {
     @Autowired
     UploadService(UploadRepository uploadRepository){
         this.uploadRepository=uploadRepository;
+    }
+
+    public Upload save(Upload upload){
+        return uploadRepository.save(upload);
     }
 
     public List<Upload> findAll(){
@@ -51,4 +64,8 @@ public class UploadService {
         System.out.println(results);
         return results;
     }
+    public List<Upload> findContaining(String containing){
+        return uploadRepository.findByFileNameContainingIgnoreCase(containing);
+    }
+
 }
