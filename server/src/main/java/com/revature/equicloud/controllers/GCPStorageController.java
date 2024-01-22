@@ -1,5 +1,7 @@
 package com.revature.equicloud.controllers;
 
+import com.revature.equicloud.dtos.FileUploadDTO;
+import com.revature.equicloud.services.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +14,7 @@ import com.revature.equicloud.services.GCPStorageService;
 import java.io.IOException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class GCPStorageController {
 
     @Autowired

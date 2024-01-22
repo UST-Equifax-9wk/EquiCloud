@@ -1,10 +1,16 @@
 package com.revature.equicloud.services;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import com.google.auth.Credentials;
+import com.google.auth.oauth2.GoogleCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,14 +25,22 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class GCPStorageService {
 
-    private final Storage storage;
-
+    private Storage storage;
+    private final String filePath;
     private final String BUCKET_NAME;
 
     @Autowired
-    public GCPStorageService(@Value("${gcp.bucket.name}") String bucketName) {
+    public GCPStorageService(@Value("${gcp.bucket.name}") String bucketName, @Value("${gcp.config.file.path}") String filePath, ResourceLoader resourceLoader) {
         this.BUCKET_NAME = bucketName;
-        this.storage = StorageOptions.getDefaultInstance().getService();
+        this.filePath = filePath;
+        try{
+            Resource resource = resourceLoader.getResource("classpath:" + filePath);
+            Credentials credentials = GoogleCredentials.fromStream(resource.getInputStream());
+            this.storage = StorageOptions.newBuilder().setProjectId("equicloud").setCredentials(credentials).build().getService();
+        } catch (IOException e) {
+            this.storage = StorageOptions.newBuilder().build().getService();
+            System.out.println("Failed to load GCP credentials file. Using default credentials." + e.getMessage());
+        }
     }
 
     public String uploadFile(MultipartFile file) throws IOException {
