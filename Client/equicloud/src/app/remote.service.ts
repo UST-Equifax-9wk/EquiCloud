@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,16 @@ export class RemoteService {
     this.baseUrl = "http://localhost:8080"
    }
 
-   upload(upload : Upload) { //Maybe add in a username request param once that gets implemented in the controller
-    return this.httpClient.post(this.baseUrl+`/upload`, JSON.stringify(upload),
+   uploadFile(formData : any) : Observable<any> { //Maybe add in a username request param once that gets implemented in the controller
+    return this.httpClient.post(this.baseUrl+`/upload`, formData,
+      {
+        responseType : 'text'
+      }
+    )
+  }
+
+   uploadMetadata(upload : Upload) {
+    return this.httpClient.post(this.baseUrl+`/uploadMetadata`, JSON.stringify(upload),
     {
       observe: 'response',
       withCredentials: true,
@@ -22,8 +31,8 @@ export class RemoteService {
         'Content-Type' : 'application/json'
       })
     })
-  }
-  
+   }
+
    getAllFiles(){
     return this.httpClient.get(this.baseUrl+"/files",
     {
@@ -43,5 +52,4 @@ export interface Upload {
   description : string
   path : string
   uploadDate?: string
-  file?: File
 }

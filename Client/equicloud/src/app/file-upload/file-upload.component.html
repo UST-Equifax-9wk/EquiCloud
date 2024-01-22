@@ -6,11 +6,20 @@
 <br>
 
 <input type="text" id="fileName" [(ngModel)] = "fileName" placeholder="File name"  pattern="[a-zA-Z.\-_]+"
-       title="Only letters, underscores(_), and hyphens(-) are allowed in file names. You cannot have more than one underscore or hyphen in a row."
+       title="Only letters, underscores(_), and hyphens(-) are allowed in file names."
        onkeypress="return /[a-zA-Z.\-_\s]/i.test(event.key)">
 <br>
 
 <input type="text" id="fileDescription" [(ngModel)] = "fileDescription" placeholder="Description" style="width: 50%; height: 10vh; vertical-align: top;">
 <br>
+
+<p>(Optional) Select a folder to place your file in:
+<select name="path" id="path" [(ngModel)]="filePath">
+    @for(post of data; track post) {
+        <option value="{{post}}"{{post}}></option>
+    }
+</select></p>
+<br><br><br>
+
 
 <button (click)="upload()">Upload file</button>

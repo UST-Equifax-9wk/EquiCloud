@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RemoteService, Upload } from '../remote.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-file-upload',
@@ -25,7 +26,9 @@ export class FileUploadComponent {
   fileName : string = ""
   fileDescription : string = ""
   filePath : string = ""
-  file ?: File
+  file : any
+  currentUsername : string = ""
+  data: any[] = []
 
   constructor(router : Router, remoteService : RemoteService) {
     this.router = router
@@ -33,12 +36,32 @@ export class FileUploadComponent {
   }
 
   upload() {
+    const formData = new FormData();
+    console.log("file contents", this.file)
+    formData.append('file', this.file)
     let upload : Upload = {
       fileName : this.fileName,
       description : this.fileDescription,
       path : this.filePath,
-      file : this.file
     }
-    console.log(upload)
+    this.remoteService.uploadFile(formData).subscribe({
+      next: (data) => {
+        alert(`${this.fileName} has successfully been uploaded.`)
+        console.log(data)
+      },
+      error: (error:HttpErrorResponse) => {
+        alert("Failed to upload file.")
+        console.log(error.error)
+      }
+    })
+
+    this.remoteService.uploadMetadata(upload).subscribe({
+      next: (data) => {
+        console.log("Sucessfully uploaded file metadata", data)
+      },
+      error: (error:HttpErrorResponse) => {
+        console.log("Error uploading file metadata", error.error)
+      }
+    })
   }
 }
