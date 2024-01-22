@@ -32,4 +32,12 @@ public class UploadService {
         return uploadRepository.findByFileNameContainingIgnoreCase(containing);
     }
 
+    public Upload findByFilePath(String filePath) {
+        return uploadRepository.findByFilePath(filePath);
+    }
+
+    public void delete(Upload upload) {
+        uploadRepository.delete(upload);
+    }
+
 }

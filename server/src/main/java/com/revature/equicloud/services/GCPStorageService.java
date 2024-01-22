@@ -131,6 +131,10 @@ public class GCPStorageService {
         try {
             BlobId blobId = BlobId.of(BUCKET_NAME, filePath);
             boolean deleted = storage.delete(blobId);
+            Upload upload = uploadService.findByFilePath(filePath);
+            if(upload != null){
+                uploadService.delete(upload);
+            }
             if(!deleted){
                 throw new StorageOperationException("File not found in GCP Storage: " + filePath);
             }
