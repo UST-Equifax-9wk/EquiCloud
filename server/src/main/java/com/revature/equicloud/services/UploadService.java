@@ -29,7 +29,7 @@ public class UploadService {
     }
 
     public List<Upload> findContaining(String containing){
-        return uploadRepository.findByFileNameContaining(containing);
+        return uploadRepository.findByFileNameContainingIgnoreCase(containing);
     }
 
 }

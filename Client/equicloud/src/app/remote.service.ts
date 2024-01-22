@@ -40,5 +40,5 @@ export interface Upload {
   fileName : string
   description : string
   path : string
-  uploadDate?: string
+  uploadDate: string
 }

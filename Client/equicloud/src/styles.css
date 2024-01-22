@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+.global{
+    position: relative;
+    left:5px;
+}
+.poweredBy{
+    position:absolute;
+    top:30px;
+    right:5px;
+}
 .fileName{
     position:relative;
     left:30px;
@@ -11,7 +20,9 @@
     position:relative;
     left:10px;
 }
-
+.folderButton{
+    border:none;
+}
 .fileList{
     border-style: solid;
     border-width: 2px;
@@ -23,4 +34,29 @@
 .fileLabel{
     width: 95%;
     
+}
+.nestedList{
+    position:relative;
+    left:2.5%;
+    width: 95%;
+
+}
+.nestedListVisible{
+    position:relative;
+    left:2.5%;
+    width: 95%;
+    border-style: solid;
+    border-width: 2px;
+}
+.nestedListInvisible{
+    width: 95%;
+
+}
+.visibleFolder{
+    
+}
+
+.logo{
+    position:relative;
+    top:5px;
 }

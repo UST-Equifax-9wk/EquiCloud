@@ -16,7 +16,7 @@ export class ListFilesComponent {
   visible:Array<boolean>=[];
   search="";
   lastSearch="";
-  sortBy="file name";
+  sortBy="Alphabetical";
   ascending=true;
   remote:RemoteService;
   constructor(remote:RemoteService){
@@ -52,7 +52,8 @@ export class ListFilesComponent {
           folder: "",
           nested: [],
           files: [],
-          visible:false
+          visible:false,
+          uploadDate:""
         };
       for(let folder of this.folders){
         if(folder.folder==path[0]){
@@ -65,7 +66,8 @@ export class ListFilesComponent {
           folder: path[0],
           nested: [],
           files: [],
-          visible:false
+          visible:false,
+          uploadDate:""
         };
         this.folders.push(newFolder)
         parentFolder=newFolder;
@@ -91,7 +93,8 @@ export class ListFilesComponent {
               folder: path[i],
               nested: [],
               files: [],
-              visible:false
+              visible:false,
+              uploadDate:""
             };
             parentFolder.nested.push(newFolder);
             parentFolder=newFolder;
@@ -157,15 +160,75 @@ export class ListFilesComponent {
   
 
   sort(){
-    if(this.sortBy=="file name"){
+    if(this.sortBy=="Alphabetical"){
       if(this.ascending){
         this.folders.sort((a,b)=>a.folder.localeCompare(b.folder))
+        for(let folder of this.folders){
+          folder.files.sort((a,b)=>a.fileName.localeCompare(b.fileName))
+          folder.nested.sort((a,b)=>a.folder.localeCompare(b.folder))
+          for(let nested of folder.nested){
+            nested.files.sort((a,b)=>a.fileName.localeCompare(b.fileName))
+          }
+        }
       }
       if(!this.ascending){
         this.folders.sort((a,b)=>b.folder.localeCompare(a.folder))
+        for(let folder of this.folders){
+          folder.files.sort((a,b)=>b.fileName.localeCompare(a.fileName))
+          folder.nested.sort((a,b)=>b.folder.localeCompare(a.folder))
+          for(let nested of folder.nested){
+            nested.files.sort((a,b)=>b.fileName.localeCompare(a.fileName))
+          }
+        }
+      }
+    }
+    else{
+      if(this.ascending){
+        for(let folder of this.folders){
+          for(let nested of folder.nested){
+            nested.files.sort((a,b)=>a.uploadDate<b.uploadDate ? -1: a.uploadDate>b.uploadDate ? 1:0)
+            nested.uploadDate=nested.files[0].uploadDate;
+          }
+          folder.files.sort((a,b)=>a.uploadDate<b.uploadDate ? -1: a.uploadDate>b.uploadDate ? 1:0)
+          folder.nested.sort((a,b)=>a.uploadDate<b.uploadDate? -1: a.uploadDate>b.uploadDate ? 1:0)
+          
+          if(folder.files.length>0){
+            if(folder.nested.length>0){
+              if(folder.files[0].uploadDate>folder.nested[0].uploadDate)folder.uploadDate=folder.nested[0].uploadDate
+              else folder.uploadDate=folder.files[0].uploadDate;
+            }
+            else folder.uploadDate=folder.files[0].uploadDate
+          }
+          else folder.uploadDate=folder.nested[0].uploadDate;        }
+      
+        this.folders.sort((a,b)=>a.uploadDate<b.uploadDate? -1: a.uploadDate>b.uploadDate ? 1:0)
+      }
+      if(!this.ascending){
+        for(let folder of this.folders){
+          for(let nested of folder.nested){
+            nested.files.sort((a,b)=>a.uploadDate<b.uploadDate ? 1: a.uploadDate>b.uploadDate ? -1:0)
+            nested.uploadDate=nested.files[0].uploadDate;
+          }
+          folder.files.sort((a,b)=>a.uploadDate<b.uploadDate ? 1: a.uploadDate>b.uploadDate ? -1:0)
+          folder.nested.sort((a,b)=>a.uploadDate<b.uploadDate? 1: a.uploadDate>b.uploadDate ? -1:0)
+          
+
+          if(folder.files.length>0){
+            if(folder.nested.length>0){
+              if(folder.files[0].uploadDate<folder.nested[0].uploadDate)folder.uploadDate=folder.nested[0].uploadDate
+              else folder.uploadDate=folder.files[0].uploadDate;
+            }
+            else folder.uploadDate=folder.files[0].uploadDate
+          }
+          else folder.uploadDate=folder.nested[0].uploadDate;
+
+          
+        }
+        this.folders.sort((a,b)=>a.uploadDate<b.uploadDate? 1: a.uploadDate>b.uploadDate ? -1:0)
       }
     }
   }
+  
 }
 
 export interface Folder{
@@ -173,5 +236,6 @@ export interface Folder{
   nested:Array<Folder>;
   files:Array<Upload>;
   visible:boolean;
+  uploadDate:string;
 }
 

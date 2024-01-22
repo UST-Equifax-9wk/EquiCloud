@@ -10,6 +10,6 @@ import java.util.List;
 public interface UploadRepository extends JpaRepository<Upload, String> {
     public Upload findByFileName(String fileName);
 
-    public List<Upload> findByFileNameContaining(String fileName);
+    public List<Upload> findByFileNameContainingIgnoreCase(String fileName);
 
 }
