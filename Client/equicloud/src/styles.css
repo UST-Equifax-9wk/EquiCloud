@@ -1,13 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 .global{
     position: relative;
-    left:15px;
-    width: 98%;
+    width: 100%;
     
 }
 .header{
     background-color:#9e1c33;
     color:white;
+    width:100%;
+}
+.nav{
+    position: absolute;
+    top:50px;
+    left:170px;
 }
 .poweredBy{
     position:absolute;
@@ -28,6 +33,7 @@
 
 #logoutButton{
 position:absolute;
+top:90px;
 right:5px;
 
 }
@@ -80,7 +86,12 @@ height: 40px;
     position:relative;
     right:4%;
 }
+.equicloudLogo{
+    position:relative;
+    bottom:10px;
+    left:5px;
+}
 #fileListButton{
-    position:absolute;
-    left:150px;
+    position:relative;
+    left:10px;
 }
