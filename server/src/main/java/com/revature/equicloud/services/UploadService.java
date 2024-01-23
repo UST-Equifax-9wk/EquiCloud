@@ -35,13 +35,15 @@ public class UploadService {
     }
 
     public Upload saveMetadata(Upload upload) {
+        System.out.println("IN SERVICE : " + upload);
+        upload.setUploadDate(Instant.now());
         return this.uploadRepository.save(upload);
     }
 
     public ArrayList<String> findFoldersByUsername(String username) {
-        String modifiedString = username + "\\\\";
+        String modifiedString = username + "/";
         Set<String> paths = uploadRepository.findAllPathsByUser(modifiedString);
-        Pattern pattern = Pattern.compile("\\\\(\\S+)(\\\\)");
+        Pattern pattern = Pattern.compile("/(\\S+)(/)");
 
         ArrayList<String> results = new ArrayList<>();
         for(String path : paths) {

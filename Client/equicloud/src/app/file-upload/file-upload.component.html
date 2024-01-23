@@ -7,10 +7,10 @@
 
 <input type="text" id="fileName" [(ngModel)] = "fileName" placeholder="File name"  pattern="[a-zA-Z.\-_]+"
        title="Only letters, underscores(_), and hyphens(-), and periods(.) are allowed in file names."
-       onkeypress="return /[a-zA-Z.\-_\s]/i.test(event.key)">
+       onkeypress="return /[a-zA-Z.\-_\s]/i.test(event.key)" maxlength="30">
 <br>
 
-<input type="text" id="fileDescription" [(ngModel)] = "fileDescription" placeholder="Description" style="width: 50%; height: 10vh; vertical-align: top;">
+<input type="text" id="fileDescription" [(ngModel)] = "fileDescription" placeholder="Description" style="width: 50%; height: 10vh; vertical-align: top;" maxlength="255">
 <br>
 
 <p>(Optional) Select a folder to place your file in:
@@ -24,8 +24,8 @@
 <label for="newFolderCheckbox">Create new folder</label>
 <div *ngIf="newFolder">
     <input type="text" id="newFolderName" [(ngModel)] = "newFolderName" placeholder="Enter new folder name"  pattern="[a-zA-Z.\-_]+"
-       title="Only letters, underscores(_), and hyphens(-) are allowed in folder names."
-       onkeypress="return /[0-9a-zA-Z\-_]/i.test(event.key)">
+       title="Only letters, numbers, underscores(_), and hyphens(-) are allowed in folder names."
+       onkeypress="return /[0-9a-zA-Z\-_]/i.test(event.key)" maxlength="30">
 <br>
 </div>
 <br><br><br>

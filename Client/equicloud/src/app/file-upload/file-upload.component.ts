@@ -55,22 +55,29 @@ export class FileUploadComponent implements OnInit{
 
   upload() {
     if(this.newFolder) {
-      this.filePath = this.newFolderName
+      this.filePath = `/${this.newFolderName}/${this.fileName}`
+    } else {
+      if(this.filePath == "") {
+        this.filePath = `/${this.fileName}`
+      } else {
+        this.filePath = `/${this.filePath}/${this.fileName}`
+      }
     }
+
+    let upload : Upload = {
+      fileName : this.fileName,
+      description : this.fileDescription,
+      path : `${this.currentUsername}${this.filePath}`,
+      uploadDate : ""
+    }
+
     this.currentUsername = this.currentUserService.getLoggedInUsername()
     const formData = new FormData();
     console.log("file contents", this.file)
     formData.append('file', this.file)
-    formData.append('fileName', this.fileName)
+    formData.append('fileName', upload.path)
     formData.append('description', this.fileDescription)
-    let upload : Upload = {
-      fileName : this.fileName,
-      description : this.fileDescription,
-      //path : this.currentUsername + `\\` + this.filePath + `\\${this.fileName}`,
-      path : `${this.currentUsername}\\${this.filePath}\\${this.fileName}`,
-      uploadDate : ""
-    }
-    console.log("~~~~~~~~~~~~~~~" + upload)
+    
     this.remoteService.uploadFile(formData).subscribe({
       next: (data) => {
         alert(`${this.fileName} has successfully been uploaded.`)
@@ -81,7 +88,7 @@ export class FileUploadComponent implements OnInit{
         console.log(error.error)
       }
     })
-
+    
     this.remoteService.uploadMetadata(upload).subscribe({
       next: (data) => {
         console.log("Sucessfully uploaded file metadata", data)
@@ -90,5 +97,7 @@ export class FileUploadComponent implements OnInit{
         console.log("Error uploading file metadata", error.error)
       }
     })
+
+    this.filePath = ""
   }
 }
