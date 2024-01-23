@@ -1,12 +1,11 @@
 <div class="global">
 <h1>EquiCloud</h1>
-<ng-container *ngIf="!loggedIn">
-  <a id="loginLink" routerLink="login">Login</a>
-  <a id="registerLink" routerLink="register">Register</a>
-</ng-container>
 <ng-container *ngIf="loggedIn">    
-  <button type="button" id="logoutButton" (click)="logout()">Logout</button>
-</ng-container>
+    <button class="btn btn-danger" type="button" id="logoutButton" (click)="logout()">Logout</button>
+    <button type="button" class="btn btn-outline-secondary" id="fileUploadButton" (click)="navigateToUpload()">Upload files</button>
+    <button type="button" class="btn btn-outline-secondary" id="fileListButton" (click)="navigateToFileList()">View list of files</button>
+  </ng-container>
+
 
 <div class="poweredBy">
   Powered By: 

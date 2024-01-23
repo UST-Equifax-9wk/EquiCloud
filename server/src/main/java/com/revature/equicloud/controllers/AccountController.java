@@ -7,6 +7,7 @@ import com.revature.equicloud.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -22,7 +23,7 @@ public class AccountController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("Testing authentication");
+    public ResponseEntity<String> test(Authentication authentication) {
+        return ResponseEntity.ok("Testing authentication" + authentication.getName());
     }
 }

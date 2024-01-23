@@ -36,6 +36,12 @@ public class Upload {
         this.uploadDate = uploadDate;
     }
 
+    public Upload(String fileName, String description, String path) {
+        this.fileName = fileName;
+        this.description = description;
+        this.path = path;
+    }
+
     public String getFileName() {
         return fileName;
     }

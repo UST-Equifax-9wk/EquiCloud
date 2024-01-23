@@ -1,26 +1,54 @@
-<div>
-    <p>Registration</p>
-    <form autocomplete="off" name="form" (ngSubmit)="register()">
-           <label>Firstname </label>
-           <input type="text" [(ngModel)]= "firstName" name="firstName"
-                  placeholder="Firstname" 
-                  >
-           <label>Lastname </label>
-           <input type="text" [(ngModel)]="lastName" name="lastName"
-                  placeholder="Lastname">
-
-           <label>Username </label>
-           <input type="text" [(ngModel)]="accountName" name="userName"
-                  placeholder="Username">
-           <label>Password </label>
-           <input type="password" [(ngModel)]="password" name="password"
-                  placeholder="Password">
-           <label>Email </label>
-           <input type="text" [(ngModel)]="email" name="email"
-                  placeholder="Email" >
-           <button type="submit" >Register</button>
-           <hr>
-           <a routerLink="">Back to Login</a>
-    
-    </form>
-</div>
+<div class ="container d-flex justify-content-center">
+       <form autocomplete="off" name="form" #f="ngForm" (ngSubmit)="f.valid && register()">
+              <p class="h4 m-4 d-block text-center ">Registration</p>
+              <label>Firstname </label>
+              <input type="text" [(ngModel)]= "firstName" name="firstName" class="form-control mb-4 "
+                     placeholder="Firstname" 
+                     required #firstname="ngModel"
+                     [ngClass] = "{ 'is-invalid': f.submitted && firstname.errors }">
+              <div *ngIf= "f.submitted && firstname.errors" class ="invalid-feedback">
+                     <small *ngIf="firstname.errors?.['required']"> Firstname is required</small>
+              </div>
+              <label>Lastname </label>
+              <input type="text" [(ngModel)]="lastName" name="lastName" class="form-control mb-4" 
+                     placeholder="Lastname"
+                     required #lastname="ngModel"
+                     [ngClass] = "{ 'is-invalid': f.submitted && lastname.errors }">
+              <div *ngIf= "f.submitted && lastname.errors" class ="invalid-feedback">
+                     <small *ngIf="lastname.errors?.['required']"> Lastname is required</small>
+              </div>
+              <label>Username </label>
+              <input type="text" [(ngModel)]="accountName" name="userName" class="form-control mb-4" 
+                     placeholder="Username"
+                     required minlength="6" #username="ngModel"
+                     [ngClass] = "{ 'is-invalid': f.submitted && username.errors }">
+              <div *ngIf= "f.submitted && username.errors" class ="invalid-feedback">
+                     <small *ngIf="username.errors?.['required']"> Username is required</small>
+                     <small *ngIf="username.errors?.['minlength']"> Username must be at least 6 characters</small>
+              </div>
+              <label>Password </label>
+              <input type="password" [(ngModel)]="password" name="passWord" class="form-control mb-4"
+                     placeholder="Password"
+                     required minlength="6" #passWord="ngModel"
+                     [ngClass] = "{ 'is-invalid': f.submitted && passWord.errors }">
+              <div *ngIf= "f.submitted && passWord.errors" class ="invalid-feedback">
+                     <small *ngIf="passWord.errors?.['required']"> Password is required</small>
+                     <small *ngIf="passWord.errors?.['minlength']"> Password must be at least 6 characters</small>
+              </div>
+              <label>Email </label>
+              <input type="text" [(ngModel)]="email" name="email" class="form-control mb-4" 
+                     placeholder="Email" 
+                     required email #eMail="ngModel"
+                     [ngClass] = "{ 'is-invalid': f.submitted && eMail.errors }">
+              <div *ngIf= "f.submitted && eMail.errors" class ="invalid-feedback">
+                     <small *ngIf="eMail.errors?.['required']"> Email is required</small>
+                     <small *ngIf="eMail.errors?.['email']"> Email is invalid</small>
+              </div>
+              <div class="d-grid gap-2">
+              <button type="submit" id="registerButton" class="btn btn-primary m-2 w-100">Register</button>
+              </div>
+              <hr>
+              <a routerLink="" class="d-block text-center">Back to Login</a>
+       
+       </form>
+       </div>
