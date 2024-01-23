@@ -60,24 +60,6 @@ height: 40px;
     bottom:2px;
     height: 40px;
 }
-/* table tr {
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
-  }
-  table th{
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
-  }
-  table td{
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
-  } */
   table thead{
     background-color: #9e1c33;
     color:white;
