@@ -1,21 +1,25 @@
 package com.revature.equicloud.services;
 
 import com.revature.equicloud.dtos.AuthenticationRequest;
+import com.revature.equicloud.dtos.AuthenticationResponse;
 import com.revature.equicloud.dtos.RegisterRequest;
 import com.revature.equicloud.entities.Account;
 import com.revature.equicloud.entities.Password;
 import com.revature.equicloud.repositories.AccountRepository;
 import com.revature.equicloud.repositories.PasswordRepository;
 import com.revature.equicloud.security.JwtUtil;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.ArrayList;
 
 @Service

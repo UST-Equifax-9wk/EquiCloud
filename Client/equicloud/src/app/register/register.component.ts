@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountDto, RemoteService } from '../remote.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule,RouterLink , CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -18,7 +19,8 @@ export class RegisterComponent {
   password : string = ''
   email : string = ''
 
-  constructor (private remoteService: RemoteService) {}
+  constructor (private remoteService: RemoteService,
+    private router: Router) {}
 
   register(){
     let account : AccountDto = {
@@ -31,7 +33,7 @@ export class RegisterComponent {
     this.remoteService.register(account).subscribe(
       response => {
         console.log("Registration Success");
-        window.location.replace("login")
+        window.location.replace("")
       },
       error => {
         console.log("Registraion failed")
