@@ -46,7 +46,7 @@ export class FileUploadComponent implements OnInit{
   }
 
   fetch() {
-    this.httpClient.get(`http://localhost:8080/${this.currentUsername}/folders`)
+    this.httpClient.get(`${this.remoteService.baseUrl}/${this.currentUsername}/folders`)
     .subscribe((data: any) => {
       console.log(data);
       this.data = data;
@@ -82,6 +82,7 @@ export class FileUploadComponent implements OnInit{
       next: (data) => {
         alert(`${this.fileName} has successfully been uploaded.`)
         console.log(data)
+        window.location.replace("file-upload")
       },
       error: (error:HttpErrorResponse) => {
         alert("Failed to upload file.")
@@ -89,14 +90,14 @@ export class FileUploadComponent implements OnInit{
       }
     })
     
-    this.remoteService.uploadMetadata(upload).subscribe({
-      next: (data) => {
-        console.log("Sucessfully uploaded file metadata", data)
-      },
-      error: (error:HttpErrorResponse) => {
-        console.log("Error uploading file metadata", error.error)
-      }
-    })
+    // this.remoteService.uploadMetadata(upload).subscribe({
+    //   next: (data) => {
+    //     console.log("Sucessfully uploaded file metadata", data)
+    //   },
+    //   error: (error:HttpErrorResponse) => {
+    //     console.log("Error uploading file metadata", error.error)
+    //   }
+    // })
 
     this.filePath = ""
   }
