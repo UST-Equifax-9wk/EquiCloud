@@ -25,7 +25,7 @@ export class AppComponent {
       response => {
         console.log("Logged out successfully");
         sessionStorage.removeItem("auth-user");
-        window.location.replace("login");
+        window.location.replace("");
       },
       error => {
         console.log("Logout Error");
