@@ -53,7 +53,7 @@ export class ListFilesComponent {
 
   populate(data:HttpResponse<Object>, vis:boolean){
     for(let upload of data.body as Array<Upload>){
-      let path=upload.path.split('\\')
+      let path=upload.path.split('/')
       let push=true;
       let parentFolder:Folder={
           folder: "",
@@ -111,16 +111,20 @@ export class ListFilesComponent {
 
 
   refresh(){
-    this.folders=[];
-    this.visible=[];
+    console.log(this.search)
+    console.log(this.lastSearch)
     if(this.search==this.lastSearch){
       this.sort();
-      
+      return;
     }
+    this.folders=[];
+    this.visible=[];
     if(this.search==""){
+      this.lastSearch="";
       this.remote.getAllFiles().subscribe({
         next:(data)=>{
           this.populate(data,false);
+          console.log("next")
         },
         error:(error:HttpErrorResponse)=>{
           alert("Error retrieving files");
@@ -129,6 +133,7 @@ export class ListFilesComponent {
       })
     }
     else{
+      this.lastSearch=this.search;
       this.remote.getFilesContaining(this.search).subscribe({
         next:(data)=>{
           this.populate(data,true);

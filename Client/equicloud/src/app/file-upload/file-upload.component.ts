@@ -67,7 +67,7 @@ export class FileUploadComponent implements OnInit{
       fileName : this.fileName,
       description : this.fileDescription,
       //path : this.currentUsername + `\\` + this.filePath + `\\${this.fileName}`,
-      path : `${this.currentUsername}\\${this.filePath}\\${this.fileName}`,
+      path : `${this.currentUsername}/${this.filePath}/${this.fileName}`,
       uploadDate : ""
     }
     console.log("~~~~~~~~~~~~~~~" + upload)

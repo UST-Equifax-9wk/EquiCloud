@@ -81,8 +81,8 @@ public class GCPStorageService {
                 writer.write(ByteBuffer.wrap(file.getBytes()));
             }
             String fileName = filePath.split("/")[filePath.split("/").length - 1];
-            Upload upload = new Upload(fileName, description, filePath, null);
-            uploadService.save(upload);
+//            Upload upload = new Upload(fileName, description, filePath, null);
+//            uploadService.save(upload);
             return "File uploaded successfully: " + fileName;
         } catch (StorageException e) {
             throw new IOException("GCP Storage exception during file upload: " +  e.getMessage(), e);
