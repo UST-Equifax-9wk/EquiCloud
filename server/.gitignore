@@ -33,4 +33,10 @@ build/
 .vscode/
 *.properties
 .env
+<<<<<<< HEAD
+
 *\equicloud-08122c442b64.json
+
+=======
+*\equicloud-08122c442b64.json
+>>>>>>> origin
