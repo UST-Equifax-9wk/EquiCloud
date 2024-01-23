@@ -1,0 +1,36 @@
+<header>
+    <h1>Select a file to upload, {{currentUsername}}</h1>
+</header>
+
+<input type="file" class="file-upload" (change)="onFileSelected($event)">
+<br>
+
+<input type="text" id="fileName" [(ngModel)] = "fileName" placeholder="File name"  pattern="[a-zA-Z.\-_]+"
+       title="Only letters, underscores(_), and hyphens(-), and periods(.) are allowed in file names."
+       onkeypress="return /[a-zA-Z.\-_\s]/i.test(event.key)">
+<br>
+
+<input type="text" id="fileDescription" [(ngModel)] = "fileDescription" placeholder="Description" style="width: 50%; height: 10vh; vertical-align: top;">
+<br>
+
+<p>(Optional) Select a folder to place your file in:
+<select [disabled]="newFolder" id="path" [(ngModel)]="filePath">
+    <!--option value="{{post}}"{{post}}></option-->
+    <option *ngFor="let filePath of data" [value]="filePath">{{filePath}}</option>
+    <option value=""> </option>
+</select>
+</p>
+<input type="checkbox" id="newFolderCheckbox" [(ngModel)]="newFolder" onclick="document.getElementById('path').value=''">
+<label for="newFolderCheckbox">Create new folder</label>
+<div *ngIf="newFolder">
+    <input type="text" id="newFolderName" [(ngModel)] = "newFolderName" placeholder="Enter new folder name"  pattern="[a-zA-Z.\-_]+"
+       title="Only letters, underscores(_), and hyphens(-) are allowed in folder names."
+       onkeypress="return /[a-zA-Z\-_]/i.test(event.key)">
+<br>
+</div>
+<br><br><br>
+
+
+<button (click)="upload()">Upload file</button>
+<br>
+<a href = "files">Back</a>

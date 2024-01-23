@@ -1,5 +1,8 @@
 package com.revature.equicloud.controllers;
 
+import com.revature.equicloud.dtos.FileUploadDTO;
+import com.revature.equicloud.services.UploadService;
+
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,7 @@ import com.revature.equicloud.services.GCPStorageService;
  * This class represents the controller for handling requests related to Google Cloud Platform (GCP) storage operations.
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class GCPStorageController {
 
     private GCPStorageService cloudStorageService;

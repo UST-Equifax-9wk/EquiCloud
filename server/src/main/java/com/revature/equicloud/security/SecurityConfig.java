@@ -46,9 +46,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .anonymous(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/login","/logout" , "/upload", "/download/*", "/files", "/create-folder", "/files/*","/auth/**")
-                    .permitAll()
-                    .anyRequest().authenticated()
+                                .requestMatchers("/login", "/logout", "/upload", "/download", "/files", "/create-folder", "/upload-metadata", "/*/folders", "/files/*","/auth/**")
+                                .permitAll()
+                                .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasicConfigurer ->
                         httpBasicConfigurer.authenticationEntryPoint(new CustomAuthenticationEntryPoint())
