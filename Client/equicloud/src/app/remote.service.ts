@@ -51,7 +51,6 @@ export class RemoteService {
     )
   }
 
-
   logout(){
     return this.httpClient.get(this.baseUrl+"/auth/logout",{
       observe: 'response',
