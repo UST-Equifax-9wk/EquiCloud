@@ -29,10 +29,7 @@ export class LoginComponent {
         sessionStorage.setItem('auth-user', JSON.stringify(response));
         console.log("Authentication Success");
         this.currentUserService.setUsername(this.accountName)
-        console.log("current user BEFORE navigation: " + this.currentUserService.getUsername())
         window.location.replace("files")
-        //this.router.navigate([`/files`])
-        console.log("current user AFTER navigation: " + this.currentUserService.getUsername())
       },
       error => {
         this.loginMessage = 'Invalid username or password.';

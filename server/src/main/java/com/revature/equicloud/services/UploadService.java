@@ -35,6 +35,7 @@ public class UploadService {
     }
 
     public Upload saveMetadata(Upload upload) {
+        upload.setUploadDate(Instant.now());
         return this.uploadRepository.save(upload);
     }
 
