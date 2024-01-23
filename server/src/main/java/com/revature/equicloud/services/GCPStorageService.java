@@ -80,11 +80,9 @@ public class GCPStorageService {
             try(WriteChannel writer = storage.writer(blobInfo)) {
                 writer.write(ByteBuffer.wrap(file.getBytes()));
             }
-            System.out.println("BEFORE SPLIT: " + filePath);
             String fileName = filePath.split("/")[filePath.split("/").length - 1];
-            System.out.println("AFTER SPLIT: " + filePath);
             Upload upload = new Upload(fileName, description, filePath, null);
-            //uploadService.save(upload);
+            uploadService.save(upload);
             return "File uploaded successfully: " + fileName;
         } catch (StorageException e) {
             throw new IOException("GCP Storage exception during file upload: " +  e.getMessage(), e);

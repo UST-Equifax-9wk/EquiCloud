@@ -11,8 +11,8 @@ export class RemoteService {
 
   constructor(client: HttpClient) {
     this.httpClient = client
-    this.baseUrl="http://34.125.212.192:7777"
-    // this.baseUrl = "http://localhost:8080"
+     this.baseUrl="http://34.125.212.192:7777"
+    //this.baseUrl = "http://localhost:8080"
    }
 
    uploadFile(formData : any) : Observable<any> { 
