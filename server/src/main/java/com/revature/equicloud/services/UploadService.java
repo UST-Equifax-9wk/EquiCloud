@@ -39,9 +39,9 @@ public class UploadService {
     }
 
     public ArrayList<String> findFoldersByUsername(String username) {
-        String modifiedString = username + "\\\\";
+        String modifiedString = username + "/";
         Set<String> paths = uploadRepository.findAllPathsByUser(modifiedString);
-        Pattern pattern = Pattern.compile("\\\\(\\S+)(\\\\)");
+        Pattern pattern = Pattern.compile("/(\\S+)(/)");
 
         ArrayList<String> results = new ArrayList<>();
         for(String path : paths) {
