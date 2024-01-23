@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RemoteService } from '../remote.service';
+import { AuthResponse, RemoteService } from '../remote.service';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
@@ -23,10 +23,8 @@ export class LoginComponent {
     console.log("accountName: " + this.accountName)
     console.log("password: " + this.password)
     this.remoteService.login(this.accountName, this.password).subscribe(
-      (response: any) => {
-        console.log("Response:", response);
-          localStorage.setItem('jwtToken', response.body.token);
-          console.log("token: " + response.body.token)
+      (response: AuthResponse) => {
+        sessionStorage.setItem('auth-user', JSON.stringify(response));
         console.log("Authentication Success");
         window.location.replace("files")
       },

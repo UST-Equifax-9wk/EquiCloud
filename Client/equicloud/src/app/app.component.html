@@ -1,9 +1,5 @@
 <div class="global">
 <h1>EquiCloud</h1>
-<ng-container *ngIf="!loggedIn">
-  <a id="loginLink" routerLink="login">Login</a>
-  <a id="registerLink" routerLink="register">Register</a>
-</ng-container>
 <ng-container *ngIf="loggedIn">    
   <button type="button" id="logoutButton" (click)="logout()">Logout</button>
 </ng-container>
