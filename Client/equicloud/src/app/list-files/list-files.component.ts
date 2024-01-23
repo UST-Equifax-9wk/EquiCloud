@@ -3,6 +3,7 @@ import { RemoteService, Upload } from '../remote.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DownloadfileService } from '../downloadfile.service';
 import { CurrentUserService } from '../current-user.service';
 
 @Component({
@@ -20,8 +21,10 @@ export class ListFilesComponent {
   sortBy="Alphabetical";
   ascending=true;
   remote:RemoteService;
+  downloadFileService:DownloadfileService;
 
-  constructor(remote:RemoteService, currentUserService : CurrentUserService){      
+  constructor(remote:RemoteService, currentUserService : CurrentUserService, downloadServiceService:DownloadfileService){  
+    this.downloadFileService=downloadServiceService;    
     this.remote=remote;
     if(sessionStorage.getItem("auth-user")==null){
       window.location.replace("login")
@@ -39,10 +42,25 @@ export class ListFilesComponent {
     }
   }
 
-
   download(file:Upload){
-    alert("download not implemented.");
-    console.log(file);
+
+    this.downloadFileService.downloadFile(file.path).subscribe({
+      next:(data)=> {
+
+        const blob: Blob = data.body as Blob;
+
+        const downloadLink = document.createElement('a');downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = file.fileName;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      },
+      error:(error:HttpErrorResponse)=> {
+        alert("Error cannot retrieve file: " + file.fileName);
+        console.log(error);
+        console.log("Trying this path: " + file.path)
+      }
+    })
   }
 
 
