@@ -1,5 +1,5 @@
 FROM openjdk:17-alpine
-COPY ./target/EquiCloud-0.3.jar /usr/app/
+COPY ./target/revportal-0.0.1-SNAPSHOT.jar /usr/app/
 WORKDIR /usr/app
 EXPOSE 7777
-ENTRYPOINT ["java", "-jar", "EquiCloud-0.3.jar"]
+ENTRYPOINT ["java", "-jar", "revportal-0.0.1-SNAPSHOT.jar"]
