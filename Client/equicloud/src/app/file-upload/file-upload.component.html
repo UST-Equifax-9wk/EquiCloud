@@ -25,7 +25,7 @@
 <div *ngIf="newFolder">
     <input type="text" id="newFolderName" [(ngModel)] = "newFolderName" placeholder="Enter new folder name"  pattern="[a-zA-Z.\-_]+"
        title="Only letters, underscores(_), and hyphens(-) are allowed in folder names."
-       onkeypress="return /[a-zA-Z\-_]/i.test(event.key)">
+       onkeypress="return /[0-9a-zA-Z\-_]/i.test(event.key)">
 <br>
 </div>
 <br><br><br>

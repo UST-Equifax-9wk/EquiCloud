@@ -38,6 +38,7 @@ public class UploadController {
 
     @PostMapping("/upload-metadata")
     public ResponseEntity<Upload> uploadMetadata(@RequestBody Upload upload) {
+        System.out.println(upload);
         Upload savedUpload = uploadService.saveMetadata(upload);
         return new ResponseEntity<>(savedUpload, HttpStatus.ACCEPTED);
     }

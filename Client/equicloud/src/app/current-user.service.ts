@@ -8,10 +8,19 @@ export class CurrentUserService {
 
   setUsername(username : string): void {
     this.username = username
-  }
+  } //DEPRICATED
 
   getUsername() : string {
     return this.username
+  } //DEPRICATED
+
+  getLoggedInUsername(): string | null {
+    const user = sessionStorage.getItem('auth-user');
+    if (user) {
+      const userData = JSON.parse(user);
+      return userData.username;
+    }
+    return null;
   }
 
   constructor() { }

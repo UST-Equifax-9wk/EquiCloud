@@ -29,7 +29,7 @@ export class FileUploadComponent implements OnInit{
   fileDescription : string = ""
   filePath : string = ""
   file : any
-  currentUsername : string = "DEFAULT"
+  currentUsername : string | null = "DEFAULT"
   data: any[] = []
   newFolder : boolean = false
   newFolderName : string = ""
@@ -38,7 +38,7 @@ export class FileUploadComponent implements OnInit{
     this.router = router
     this.remoteService = remoteService
     this.currentUserService = currentUserService
-    this.currentUsername = currentUserService.getUsername()
+    this.currentUsername = currentUserService.getLoggedInUsername()
   }
 
   ngOnInit(): void {
@@ -46,8 +46,7 @@ export class FileUploadComponent implements OnInit{
   }
 
   fetch() {
-    //this.httpClient.get(`http://localhost:8080/${this.currentUsername}/folders`)
-    this.httpClient.get(`http://localhost:8080/testuser/folders`)
+    this.httpClient.get(`http://localhost:8080/${this.currentUsername}/folders`)
     .subscribe((data: any) => {
       console.log(data);
       this.data = data;
@@ -55,7 +54,10 @@ export class FileUploadComponent implements OnInit{
   }
 
   upload() {
-    this.currentUsername = this.currentUserService.getUsername()
+    if(this.newFolder) {
+      this.filePath = this.newFolderName
+    }
+    this.currentUsername = this.currentUserService.getLoggedInUsername()
     const formData = new FormData();
     console.log("file contents", this.file)
     formData.append('file', this.file)
@@ -64,7 +66,8 @@ export class FileUploadComponent implements OnInit{
     let upload : Upload = {
       fileName : this.fileName,
       description : this.fileDescription,
-      path : this.currentUsername + `\\` + this.filePath,
+      //path : this.currentUsername + `\\` + this.filePath + `\\${this.fileName}`,
+      path : `${this.currentUsername}\\${this.filePath}\\${this.fileName}`,
       uploadDate : ""
     }
     console.log("~~~~~~~~~~~~~~~" + upload)
