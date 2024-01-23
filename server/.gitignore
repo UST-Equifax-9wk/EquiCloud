@@ -33,5 +33,6 @@ build/
 .vscode/
 *.properties
 .env
+
 *\equicloud-08122c442b64.json
-*\equicloud-411620-3d4101b6fc39.json
+

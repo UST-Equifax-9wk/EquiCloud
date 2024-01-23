@@ -1,9 +1,0 @@
-
-b
-java:S1612""LReplace this lambda with method reference 'AbstractHttpConfigurer::disable'.(Ô·¼Ç
-^
-java:S5738+"HRemove this call to a deprecated method, it has been marked for removal.(×íÑø
-c
-java:S5738-"HRemove this call to a deprecated method, it has been marked for removal.(Åúßµûÿÿÿÿ
-Q
-java:S1068"6Remove this unused "userDetailsService" private field.(ÙÍ•¯üÿÿÿÿ

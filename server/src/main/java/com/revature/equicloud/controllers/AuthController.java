@@ -7,6 +7,9 @@ import com.revature.equicloud.services.AccountService;
 import com.revature.equicloud.services.AuthenticationService;
 import com.revature.equicloud.services.UserDetailsService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
 
-    private AuthenticationService authenticationService;
-    private AccountService accountService;
+    private final AuthenticationService authenticationService;
+    private final AccountService accountService;
 
     @Autowired
     AuthController(AccountService accountService,
@@ -36,10 +39,32 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request,
+                                                               HttpServletResponse response) {
         String token = authenticationService.authenticateUser(request);
-        AuthenticationResponse authResponse = new AuthenticationResponse(token);
+
+        AuthenticationResponse authResponse = accountService.findAccount(request.getAccountName());
+        Cookie jwtCookie = new Cookie("jwtToken", token);
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setPath("/");
+        jwtCookie.setSecure(true);
+
+        response.addCookie(jwtCookie);
+
+//        AuthenticationResponse authResponse = new AuthenticationResponse(token);
         return ResponseEntity.ok(authResponse);
+    }
+
+    @GetMapping("/logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response){
+
+        Cookie jwtCookie = new Cookie("jwtToken", null);
+        jwtCookie.setSecure(true);
+        jwtCookie.setHttpOnly(false);
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge(0);
+        response.addCookie(jwtCookie);
+
     }
 
 

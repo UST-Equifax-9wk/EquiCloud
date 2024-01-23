@@ -4,6 +4,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DownloadfileService } from '../downloadfile.service';
+import { CurrentUserService } from '../current-user.service';
 
 @Component({
   selector: 'app-list-files',
@@ -22,10 +23,10 @@ export class ListFilesComponent {
   remote:RemoteService;
   downloadFileService:DownloadfileService;
 
-  constructor(remote:RemoteService, downloadServiceService:DownloadfileService){      
+  constructor(remote:RemoteService, currentUserService : CurrentUserService, downloadServiceService:DownloadfileService){  
+    this.downloadFileService=downloadServiceService;    
     this.remote=remote;
-    this.downloadFileService=downloadServiceService;
-    if(localStorage.getItem("jwtToken")==null){
+    if(sessionStorage.getItem("auth-user")==null){
       window.location.replace("login")
     }
     else{
@@ -39,26 +40,25 @@ export class ListFilesComponent {
       }
     }) 
     }
-    
   }
 
-  download(fileName:string){
-    this.downloadFileService.downloadFile(fileName).subscribe({
+  download(file:Upload){
+
+    this.downloadFileService.downloadFile(file.path).subscribe({
       next:(data)=> {
 
         const blob: Blob = data.body as Blob;
 
         const downloadLink = document.createElement('a');downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = fileName;
+        downloadLink.download = file.fileName;
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
-
-        console.log(blob);
       },
       error:(error:HttpErrorResponse)=> {
-        alert("Error cannot retrieve file: " + fileName);
+        alert("Error cannot retrieve file: " + file.fileName);
         console.log(error);
+        console.log("Trying this path: " + file.path)
       }
     })
   }
@@ -71,7 +71,7 @@ export class ListFilesComponent {
 
   populate(data:HttpResponse<Object>, vis:boolean){
     for(let upload of data.body as Array<Upload>){
-      let path=upload.path.split('\\')
+      let path=upload.path.split('/')
       let push=true;
       let parentFolder:Folder={
           folder: "",
@@ -129,16 +129,20 @@ export class ListFilesComponent {
 
 
   refresh(){
-    this.folders=[];
-    this.visible=[];
+    console.log(this.search)
+    console.log(this.lastSearch)
     if(this.search==this.lastSearch){
       this.sort();
-      
+      return;
     }
+    this.folders=[];
+    this.visible=[];
     if(this.search==""){
+      this.lastSearch="";
       this.remote.getAllFiles().subscribe({
         next:(data)=>{
           this.populate(data,false);
+          console.log("next")
         },
         error:(error:HttpErrorResponse)=>{
           alert("Error retrieving files");
@@ -147,6 +151,7 @@ export class ListFilesComponent {
       })
     }
     else{
+      this.lastSearch=this.search;
       this.remote.getFilesContaining(this.search).subscribe({
         next:(data)=>{
           this.populate(data,true);
