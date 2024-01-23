@@ -33,7 +33,7 @@ export class RegisterComponent {
     this.remoteService.register(account).subscribe(
       response => {
         console.log("Registration Success");
-        window.location.replace("")
+        window.location.replace("");
       },
       error => {
         console.log("Registraion failed")

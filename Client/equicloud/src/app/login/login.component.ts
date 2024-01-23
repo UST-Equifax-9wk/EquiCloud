@@ -21,6 +21,8 @@ export class LoginComponent {
   constructor (private remoteService: RemoteService,
     private router:Router, private currentUserService : CurrentUserService) {}
 
+
+
   login() {
     console.log("accountName: " + this.accountName)
     console.log("password: " + this.password)
