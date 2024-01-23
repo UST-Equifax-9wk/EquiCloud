@@ -2,7 +2,10 @@
   <div class="container d-flex justify-content-center">
     <div class="p-4 border rounded shadow bg-white my-4">
     <form #loginForm="ngForm" autocomplete="off" (ngSubmit)="loginForm.valid && login()">
-      <p class="h4 m-4 d-block text-center ">Log in</p>
+      <p class="h4 m-4 d-block text-center">Log in</p>
+      <div *ngIf="loginMessage" class="alert alert-danger" role="alert">
+        {{ loginMessage }}
+      </div>
       <div>
         <label for="username">Username </label>
         <input type="text" id="username" name="accountName" [(ngModel)]="accountName" 
