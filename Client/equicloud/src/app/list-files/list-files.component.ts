@@ -22,7 +22,7 @@ export class ListFilesComponent {
 
   constructor(remote:RemoteService){      
     this.remote=remote;
-    if(localStorage.getItem("jwtToken")==null){
+    if(sessionStorage.getItem("auth-user")==null){
       window.location.replace("login")
     }
     else{
