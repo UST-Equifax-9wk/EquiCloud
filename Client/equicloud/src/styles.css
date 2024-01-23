@@ -43,8 +43,22 @@ height:35px;
 #submitSearch{
 position:relative;
 bottom:2px;
+height: 40px;
+}
+#sort{
+    position:relative;
+    bottom:2px;
+    height: 40px;
+}
+.table th{
+    border:1px;
+    border-color: black;
 }
 #registerButton{
     position:relative;
     right:4%;
+}
+#fileListButton{
+    position:absolute;
+    left:150px;
 }

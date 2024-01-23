@@ -53,7 +53,7 @@ export class ListFilesComponent {
 
   populate(data:HttpResponse<Object>, vis:boolean){
     for(let upload of data.body as Array<Upload>){
-      let path=upload.path.split('\\')
+      let path=upload.path.split('/')
       let push=true;
       let parentFolder:Folder={
           folder: "",
