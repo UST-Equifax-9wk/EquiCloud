@@ -1,9 +1,12 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
 <div class="global">
-<h1>EquiCloud</h1>
+  <div>
+    <img src="../../assets/EquiCloud.png" alt="EquiCloud Logo" width="150" />
+  </div>
 <ng-container *ngIf="loggedIn">    
     <button class="btn btn-danger" type="button" id="logoutButton" (click)="logout()">Logout</button>
-    <button type="button" id="fileUploadButton" (click)="navigateToUpload()">Upload files</button>
-    <button type="button" id="fileListButton" (click)="navigateToFileList()">View list of files</button>
+    <button type="button" class="btn btn-outline-secondary" id="fileUploadButton" (click)="navigateToUpload()">Upload files</button>
+    <button type="button" class="btn btn-outline-secondary" id="fileListButton" (click)="navigateToFileList()">View list of files</button>
   </ng-container>
 
 
@@ -11,6 +14,8 @@
   Powered By: 
   <img class="logo" src="../assets/equifaxLogo.png" alt="Equifax Logo" width="100" >
 </div>
+</div>
+</nav>
 <router-outlet></router-outlet>
 
-</div>
+

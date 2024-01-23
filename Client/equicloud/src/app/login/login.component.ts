@@ -17,6 +17,7 @@ export class LoginComponent {
   accountName: string = '';
   password: string = '';
 
+  loginMessage: string = '';
   constructor (private remoteService: RemoteService,
     private router:Router, private currentUserService : CurrentUserService) {}
 
@@ -28,27 +29,14 @@ export class LoginComponent {
         sessionStorage.setItem('auth-user', JSON.stringify(response));
         console.log("Authentication Success");
         this.currentUserService.setUsername(this.accountName)
-        console.log("current user BEFORE navigation: " + this.currentUserService.getUsername())
         window.location.replace("files")
-        //this.router.navigate([`/files`])
-        console.log("current user AFTER navigation: " + this.currentUserService.getUsername())
       },
       error => {
-        console.log("Authentication failed")
+        this.loginMessage = 'Invalid username or password.';
       }
     );
   } 
 
-    test() {
-
-      this.remoteService.test().subscribe(
-        response => {
-          console.log(response)
-        },
-        error => {
-          console.log("test failed" + error)
-        }
-      )
-    }
+    
     
 }
