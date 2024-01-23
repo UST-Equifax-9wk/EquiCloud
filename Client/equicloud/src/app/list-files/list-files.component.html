@@ -1,68 +1,80 @@
 <br>
 <h2>Files:</h2>
 <label>Search</label>&nbsp;
-<input type="text" [(ngModel)]="search">&nbsp;
-<label>Sort By</label>&nbsp;
-<select name="sort" [(ngModel)]="sortBy">
+<input id="search"  type="text" [(ngModel)]="search">&nbsp;
+<label >Sort By</label>&nbsp;
+<select id="sort" [(ngModel)]="sortBy">
     <option></option>
     <option>Alphabetical</option>
     <option>Upload Date</option>
 </select>
 <ng-container *ngIf="sortBy=='Alphabetical'">
-    <select [(ngModel)]="ascending">
+    <select id="sort" [(ngModel)]="ascending">
         <option [ngValue]="true">Ascending</option>
         <option [ngValue]="false">Descending</option>
     </select>
 </ng-container>
 <ng-container *ngIf="sortBy=='upload date'">
-    <select [(ngModel)]="ascending">
+    <select id="sort" [(ngModel)]="ascending">
         <option [ngValue]="true">Old to New</option>
         <option [ngValue]="false">New to Old</option>
     </select>
 </ng-container>
 &nbsp;&nbsp;
-<button id="search" (click)="refresh()">Submit</button>
+<button id="submitSearch" class="btn btn-outline-primary" (click)="refresh()">Submit</button>
+
 <br><br>
-    <div *ngFor="let folder of folders;index as i">
+    
+<table class="table table-fixed">
+    <thead style="position:sticky;top:0">
+        <tr>
+            <th class="w-25" scope="col"></th>
+            <th class="w-25" scope="col">File Name</th>
+            <th class="w-25" scope="col">Description</th>
+            <th class="w-25" scope="col">Upload Time:</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let folder of folders;index as i">
          
-        <ng-container *ngIf="!folder.visible">
-                  
-            <button class="folderButton" (click)="show(folder)"><img src="../../assets/folder.png" alt="folder" width="30">  </button>{{folder.folder}}
-        </ng-container>
-                
-        <div class="visibleFolder"  *ngIf="folder.visible">
-            <button class="folderButton" (click)="show(folder)"><img src="../../assets/folder.png" alt="folder" width="30"></button>{{folder.folder}}
-            <br>
-            <ng-container *ngFor="let file of folder.files">
-                <br>
-                <div class="fileList">
-                    <div class="fileLabel">File Name: <span class="fileName">{{file.fileName}}</span></div>
-                    <div class="fileLabel">Description: <span class="fileDescription">{{file.description}}</span></div>
-                    <div class="fileLabel">Upload Time: <span class="fileDate">{{file.uploadDate | date:'hh:mm:ss aa'}} &nbsp;On&nbsp; {{file.uploadDate | date}} </span></div>
-                    <button class="downloadButton" (click)="download(file)">Download</button>
-                </div>
-            </ng-container>                        
-      
-                <div  class="nestedList" *ngIf="folder.visible">
-                    <ng-container *ngFor="let nest of folder.nested;index as j">                
-                        <div class="nestedListInvisible" *ngIf="!nest.visible">
-                            <br><button class="folderButton" (click)="show(nest)"><img src="../../assets/folder.png" alt="folder" width="30"></button>{{nest.folder}}
-                        </div>
-                        <ng-container class="nestedListVisible" *ngIf="nest.visible">
-                            <br><button class="folderButton" (click)="show(nest)"><img src="../../assets/folder.png" alt="folder" width="30"></button>{{nest.folder}}
-                            <ng-container *ngFor="let file of nest.files">
-                                <br>     
-                                <div class="fileList">
-                                    <div class="fileLabel">File Name: <span class="fileName">{{file.fileName}}</span></div>
-                                    <div class="fileLabel">Description: <span class="fileDescription">{{file.description}}</span></div>
-                                    <div class="fileLabel">Upload Time: <span class="fileDate">{{file.uploadDate | date:'hh:mm:ss aa'}} &nbsp;On&nbsp; {{file.uploadDate | date}} </span></div>
-                                    <button class="downloadButton" (click)="download(file)">Download</button>
-                                </div>
-                            </ng-container>
-                        </ng-container>        
-                        
+            <ng-container *ngIf="!folder.visible"> 
+                <tr>                            
+                    <button class="folderButton" (click)="show(folder)"><img src="../../assets/folder.png" alt="folder" width="30">  </button>{{folder.folder}}
+                </tr> 
+            </ng-container>
+                                
+            <ng-container class="visibleFolder"  *ngIf="folder.visible">
+                <tr>                            
+                    <button class="folderButton" (click)="show(folder)"><img src="../../assets/folder.png" alt="folder" width="30">  </button>{{folder.folder}}
+                </tr> 
+                <ng-container *ngFor="let file of folder.files">
+                    <tr>
+                        <th><button class="downloadButton" (click)="download(file)">Download</button></th>
+                        <td>{{file.fileName}}</td>
+                        <td>{{file.description}}</td>
+                        <td>{{file.uploadDate | date:'hh:mm:ss aa'}}&nbsp;On&nbsp; {{file.uploadDate | date}}</td>
+                                
+                    </tr>
+                                
+                </ng-container>
+                <ng-container *ngFor="let nest of folder.nested;index as j">
+                    <tr>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="folderButton" (click)="show(nest)"><img src="../../assets/folder.png" alt="folder" width="30"></button>{{nest.folder}}
+                    </tr>   
+                    <ng-container class="nestedListVisible" *ngIf="nest.visible">
+                        <ng-container *ngFor="let file of nest.files">
+                            <tr>
+                                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="downloadButton" (click)="download(file)">Download</button></th>
+                                <td>{{file.fileName}}</td>
+                                <td>{{file.description}}</td>
+                                <td>{{file.uploadDate | date:'hh:mm:ss aa'}}&nbsp;On&nbsp; {{file.uploadDate | date}}</td>                                        
+                            </tr>
+                        </ng-container>
                     </ng-container>
-                </div>          
-        </div>
-        <br><br>
-    </div>
+                </ng-container>
+            </ng-container>
+        </ng-container> 
+    </tbody>
+</table>
+        

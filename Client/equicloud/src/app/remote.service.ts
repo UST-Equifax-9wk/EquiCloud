@@ -49,11 +49,7 @@ export class RemoteService {
     return this.httpClient.post(this.baseUrl + "/auth/register", account)
   }
 
-  test() {
-    return this.httpClient.get<string>(this.baseUrl+"/test",
-    { responseType: 'text' as 'json' }
-    )
-  }
+  
 
 
   

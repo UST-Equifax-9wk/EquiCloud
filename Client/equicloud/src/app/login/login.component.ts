@@ -36,16 +36,6 @@ export class LoginComponent {
     );
   } 
 
-    test() {
-
-      this.remoteService.test().subscribe(
-        response => {
-          console.log(response)
-        },
-        error => {
-          console.log("test failed" + error)
-        }
-      )
-    }
+    
     
 }
