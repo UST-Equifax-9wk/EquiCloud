@@ -3,6 +3,7 @@ import { RemoteService, Upload } from '../remote.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CurrentUserService } from '../current-user.service';
 
 @Component({
   selector: 'app-list-files',
@@ -20,7 +21,7 @@ export class ListFilesComponent {
   ascending=true;
   remote:RemoteService;
 
-  constructor(remote:RemoteService){      
+  constructor(remote:RemoteService, currentUserService : CurrentUserService){      
     this.remote=remote;
     if(sessionStorage.getItem("auth-user")==null){
       window.location.replace("login")
@@ -36,7 +37,6 @@ export class ListFilesComponent {
       }
     }) 
     }
-    
   }
 
 

@@ -7,11 +7,32 @@ import { Observable, tap } from 'rxjs';
 })
 export class RemoteService {
   httpClient : HttpClient
-  baseUrl:string;
+  baseUrl : String
+
   constructor(client: HttpClient) {
     this.httpClient = client
-    this.baseUrl="http://localhost:8080"
+    this.baseUrl = "http://localhost:8080"
    }
+
+   uploadFile(formData : any) : Observable<any> { 
+    return this.httpClient.post(this.baseUrl+`/upload`, formData,
+      {
+        responseType : 'text'
+      }
+    )
+  }
+
+   uploadMetadata(upload : Upload) {
+    return this.httpClient.post(this.baseUrl+`/upload-metadata`, JSON.stringify(upload),
+    {
+      observe: 'response',
+      withCredentials: true,
+      headers: new HttpHeaders({
+        'Content-Type' : 'application/json'
+      })
+    })
+   }
+
    getAllFiles(){
     return this.httpClient.get(this.baseUrl+"/files",
     {
