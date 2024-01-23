@@ -1,16 +1,18 @@
 <div class="global">
+  <div class="header">
 <h1>EquiCloud</h1>
 <ng-container *ngIf="loggedIn">    
     <button class="btn btn-danger" type="button" id="logoutButton" (click)="logout()">Logout</button>
-    <button type="button" class="btn btn-outline-secondary" id="fileUploadButton" (click)="navigateToUpload()">Upload files</button>
-    <button type="button" class="btn btn-outline-secondary" id="fileListButton" (click)="navigateToFileList()">View list of files</button>
+    <button type="button" class="btn btn-outline-light" id="fileUploadButton" (click)="navigateToUpload()">Upload files</button>
+    <button type="button" class="btn btn-outline-light" id="fileListButton" (click)="navigateToFileList()">View list of files</button>
+  <br><br>
   </ng-container>
 
 
 <div class="poweredBy">
   Powered By: 
-  <img class="logo" src="../assets/equifaxLogo.png" alt="Equifax Logo" width="100" >
-</div>
+  <img class="logo" src="../assets/equifaxLogo2.png" alt="Equifax Logo" width="100" >
+</div></div>
 <router-outlet></router-outlet>
 
 </div>

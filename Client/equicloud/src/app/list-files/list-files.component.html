@@ -1,4 +1,4 @@
-<br><hr><br>
+<br>
 <h2>Files:</h2>
 <label>Search</label>&nbsp;
 <input id="search"  type="text" [(ngModel)]="search">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -24,13 +24,13 @@
 
 <br><br>
     
-<table class="table table-fixed">
+<table class="table table-fixed no-border-collapse ">
     <thead style="position:sticky;top:0">
         <tr>
-            <th  scope="col w-10"></th>
-            <th  scope="col w-20">File Name</th>
-            <th  scope="col w-20">Description</th>
-            <th  scope="col w-20">Upload Time:</th>
+            <th  style="width: 21%"></th>
+            <th  style="width: 15%">File Name</th>
+            <th  >Description</th>
+            <th  style="width: 13%">Upload Time:</th>
         </tr>
     </thead>
     <tbody>
@@ -48,7 +48,7 @@
                 </tr> 
                 <ng-container *ngFor="let file of folder.files">
                     <tr>
-                        <th><button class="downloadButton" (click)="download(file)">Download</button></th>
+                        <th><button class="btn btn-primary" (click)="download(file)">Download</button></th>
                         <td>{{file.fileName}}</td>
                         <td>{{file.description}}</td>
                         <td>{{file.uploadDate | date:'hh:mm:ss aa'}}&nbsp;On&nbsp; {{file.uploadDate | date}}</td>
@@ -64,7 +64,7 @@
                     <ng-container class="nestedListVisible" *ngIf="nest.visible">
                         <ng-container *ngFor="let file of nest.files">
                             <tr>
-                                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="downloadButton" (click)="download(file)">Download</button></th>
+                                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary" (click)="download(file)">Download</button></th>
                                 <td>{{file.fileName}}</td>
                                 <td>{{file.description}}</td>
                                 <td>{{file.uploadDate | date:'hh:mm:ss aa'}}&nbsp;On&nbsp; {{file.uploadDate | date}}</td>                                        
