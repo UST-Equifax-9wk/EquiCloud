@@ -39,7 +39,7 @@ export class AppComponent {
     window.location.replace("file-upload")
   }
 
-  ngOnInit() {
-    this.loggedIn = sessionStorage.getItem("auth-user")!=null;
+  navigateToFileList() {
+    window.location.replace("files")
   }
 }
