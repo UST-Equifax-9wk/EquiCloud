@@ -2,19 +2,19 @@
     <h1>Select a file to upload, {{currentUsername}}</h1>
 </header>
 
-<input type="file" class="file-upload" (change)="onFileSelected($event)">
-<br>
+<input type="file" class="file-upload" (change)="onFileSelected($event)" class="btn btn-outline-primary">
+<br><br><br>
 
-<input type="text" id="fileName" [(ngModel)] = "fileName" placeholder="File name"  pattern="[a-zA-Z.\-_]+"
+<input type="text" class="form-control" id="fileName" [(ngModel)] = "fileName" placeholder="File name"  pattern="[a-zA-Z.\-_]+"
        title="Only letters, underscores(_), and hyphens(-), and periods(.) are allowed in file names."
-       onkeypress="return /[a-zA-Z.\-_\s]/i.test(event.key)">
+       onkeypress="return /[a-zA-Z.\-_\s]/i.test(event.key)" maxlength="30" style="width: 30%">
 <br>
 
-<input type="text" id="fileDescription" [(ngModel)] = "fileDescription" placeholder="Description" style="width: 50%; height: 10vh; vertical-align: top;">
+<input type="text" class="form-control" id="fileDescription" [(ngModel)] = "fileDescription" placeholder="Description" style="width: 30%; height: 20vh; vertical-align: top;" maxlength="255">
 <br>
 
 <p>(Optional) Select a folder to place your file in:
-<select [disabled]="newFolder" id="path" [(ngModel)]="filePath">
+<select [disabled]="newFolder" id="path" [(ngModel)]="filePath" class="form-control" style="width:30%">
     <!--option value="{{post}}"{{post}}></option-->
     <option *ngFor="let filePath of data" [value]="filePath">{{filePath}}</option>
     <option value=""> </option>
@@ -24,13 +24,12 @@
 <label for="newFolderCheckbox">Create new folder</label>
 <div *ngIf="newFolder">
     <input type="text" id="newFolderName" [(ngModel)] = "newFolderName" placeholder="Enter new folder name"  pattern="[a-zA-Z.\-_]+"
-       title="Only letters, underscores(_), and hyphens(-) are allowed in folder names."
-       onkeypress="return /[0-9a-zA-Z\-_]/i.test(event.key)">
+       title="Only letters, numbers, underscores(_), and hyphens(-) are allowed in folder names."
+       onkeypress="return /[0-9a-zA-Z\-_]/i.test(event.key)" maxlength="30" class="form-control" style="width:30%">
 <br>
 </div>
 <br><br><br>
 
 
-<button (click)="upload()">Upload file</button>
+<button class="btn btn-outline-primary" (click)="upload()">Upload file</button>
 <br>
-<a href = "files">Back</a>

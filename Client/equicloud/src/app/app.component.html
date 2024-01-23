@@ -1,21 +1,24 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-<div class="global">
-  <div>
-    <img src="../../assets/EquiCloud.png" alt="EquiCloud Logo" width="150" />
+  <div class="global">
+    <div class="header">
+      <br>
+      <img class="equicloudLogo" src="../../assets/EquiCloud2.png" alt="EquiCloud Logo" width="150" />
+      
+      <ng-container  *ngIf="loggedIn">    
+        <button class="btn btn-danger" type="button" id="logoutButton" (click)="logout()">Logout</button>
+        <div class="nav">        
+          <button type="button" class="btn btn-outline-light" id="fileUploadButton" (click)="navigateToUpload()">Upload files</button>
+          <button type="button" class="btn btn-outline-light" id="fileListButton" (click)="navigateToFileList()">View list of files</button>
+        </div>
+        <br>
+      </ng-container>    
+    
+      <div class="poweredBy">
+        Powered By: 
+        <img class="equifaxLogo" src="../assets/equifaxLogo2.png" alt="Equifax Logo" width="100" >
+      </div>
+    </div>
   </div>
-<ng-container *ngIf="loggedIn">    
-    <button class="btn btn-danger" type="button" id="logoutButton" (click)="logout()">Logout</button>
-    <button type="button" class="btn btn-outline-secondary" id="fileUploadButton" (click)="navigateToUpload()">Upload files</button>
-    <button type="button" class="btn btn-outline-secondary" id="fileListButton" (click)="navigateToFileList()">View list of files</button>
-  </ng-container>
-
-
-<div class="poweredBy">
-  Powered By: 
-  <img class="logo" src="../assets/equifaxLogo.png" alt="Equifax Logo" width="100" >
-</div>
-</div>
-</nav>
-<router-outlet></router-outlet>
-
+  </nav>
+  <router-outlet></router-outlet>
 
