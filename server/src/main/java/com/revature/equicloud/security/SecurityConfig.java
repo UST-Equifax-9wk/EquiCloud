@@ -42,7 +42,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/login", "/upload", "/download/*", "/files", "/create-folder", "/uploadMetadata", "/*/folders", "/files/*","/auth/**")
+                                .requestMatchers("/login", "/upload", "/download/*", "/files", "/create-folder", "/upload-metadata", "/*/folders", "/files/*","/auth/**")
                                 .permitAll()
                                 .anyRequest().authenticated()
                 )

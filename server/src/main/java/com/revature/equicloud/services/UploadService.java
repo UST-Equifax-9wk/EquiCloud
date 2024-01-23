@@ -1,28 +1,19 @@
 package com.revature.equicloud.services;
 
-import com.revature.equicloud.dtos.FileUploadDTO;
 import com.revature.equicloud.entities.Upload;
 import com.revature.equicloud.repositories.UploadRepository;
 import jakarta.transaction.Transactional;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.revature.equicloud.entities.Upload;
-import com.revature.equicloud.repositories.UploadRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 @Transactional(Transactional.TxType.REQUIRED)
@@ -35,6 +26,7 @@ public class UploadService {
     }
 
     public Upload save(Upload upload){
+        upload.setUploadDate(Instant.now());
         return uploadRepository.save(upload);
     }
 
@@ -60,8 +52,6 @@ public class UploadService {
         }
 
         results = (ArrayList<String>)results.stream().distinct().collect(Collectors.toList());
-
-        System.out.println(results);
         return results;
     }
     public List<Upload> findContaining(String containing){

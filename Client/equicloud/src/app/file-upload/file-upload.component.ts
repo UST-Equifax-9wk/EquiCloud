@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RemoteService, Upload } from '../remote.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { CurrentUserService } from '../current-user.service';
 
 @Component({
   selector: 'app-file-upload',
@@ -12,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.css'
 })
-export class FileUploadComponent {
+export class FileUploadComponent implements OnInit{
   onFileSelected(event: any): void {
     const file: File = event.target.files[0]
     if(file) {
@@ -20,30 +21,53 @@ export class FileUploadComponent {
       console.log('Selected file:', file)
     }
   }
-
+  httpClient = inject(HttpClient)
   router : Router
   remoteService : RemoteService
+  currentUserService : CurrentUserService
   fileName : string = ""
   fileDescription : string = ""
   filePath : string = ""
   file : any
-  currentUsername : string = ""
+  currentUsername : string = "DEFAULT"
   data: any[] = []
+  newFolder : boolean = false
+  newFolderName : string = ""
 
-  constructor(router : Router, remoteService : RemoteService) {
+  constructor(router : Router, remoteService : RemoteService, currentUserService : CurrentUserService) {
     this.router = router
     this.remoteService = remoteService
+    this.currentUserService = currentUserService
+    this.currentUsername = currentUserService.getUsername()
+  }
+
+  ngOnInit(): void {
+      this.fetch()
+  }
+
+  fetch() {
+    //this.httpClient.get(`http://localhost:8080/${this.currentUsername}/folders`)
+    this.httpClient.get(`http://localhost:8080/testuser/folders`)
+    .subscribe((data: any) => {
+      console.log(data);
+      this.data = data;
+    });
   }
 
   upload() {
+    this.currentUsername = this.currentUserService.getUsername()
     const formData = new FormData();
     console.log("file contents", this.file)
     formData.append('file', this.file)
+    formData.append('fileName', this.fileName)
+    formData.append('description', this.fileDescription)
     let upload : Upload = {
       fileName : this.fileName,
       description : this.fileDescription,
-      path : this.filePath,
+      path : this.currentUsername + `\\` + this.filePath,
+      uploadDate : ""
     }
+    console.log("~~~~~~~~~~~~~~~" + upload)
     this.remoteService.uploadFile(formData).subscribe({
       next: (data) => {
         alert(`${this.fileName} has successfully been uploaded.`)

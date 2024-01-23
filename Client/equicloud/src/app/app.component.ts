@@ -24,4 +24,8 @@ export class AppComponent {
       localStorage.removeItem('jwtToken');
       window.location.replace("login")
       }
+  
+  navigateToUpload() {
+    window.location.replace("file-upload")
+  }
 }

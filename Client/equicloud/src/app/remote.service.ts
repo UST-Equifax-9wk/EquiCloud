@@ -14,7 +14,7 @@ export class RemoteService {
     this.baseUrl = "http://localhost:8080"
    }
 
-   uploadFile(formData : any) : Observable<any> { //Maybe add in a username request param once that gets implemented in the controller
+   uploadFile(formData : any) : Observable<any> { 
     return this.httpClient.post(this.baseUrl+`/upload`, formData,
       {
         responseType : 'text'
@@ -23,7 +23,7 @@ export class RemoteService {
   }
 
    uploadMetadata(upload : Upload) {
-    return this.httpClient.post(this.baseUrl+`/uploadMetadata`, JSON.stringify(upload),
+    return this.httpClient.post(this.baseUrl+`/upload-metadata`, JSON.stringify(upload),
     {
       observe: 'response',
       withCredentials: true,
@@ -94,5 +94,5 @@ export interface Upload {
   fileName : string
   description : string
   path : string
-  uploadDate?: string
+  uploadDate: string
 }
