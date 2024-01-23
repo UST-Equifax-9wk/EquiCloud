@@ -17,6 +17,7 @@ export class LoginComponent {
   accountName: string = '';
   password: string = '';
 
+  loginMessage: string = '';
   constructor (private remoteService: RemoteService,
     private router:Router, private currentUserService : CurrentUserService) {}
 
@@ -34,7 +35,7 @@ export class LoginComponent {
         console.log("current user AFTER navigation: " + this.currentUserService.getUsername())
       },
       error => {
-        console.log("Authentication failed")
+        this.loginMessage = 'Invalid username or password.';
       }
     );
   } 
