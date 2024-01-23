@@ -1,14 +1,19 @@
 package com.revature.equicloud.services;
 
-import java.util.List;
-
+import com.revature.equicloud.entities.Upload;
+import com.revature.equicloud.repositories.UploadRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revature.equicloud.entities.Upload;
-import com.revature.equicloud.repositories.UploadRepository;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import jakarta.transaction.Transactional;
 
 @Service
 @Transactional(Transactional.TxType.REQUIRED)
@@ -21,6 +26,7 @@ public class UploadService {
     }
 
     public Upload save(Upload upload){
+        upload.setUploadDate(Instant.now());
         return uploadRepository.save(upload);
     }
 
@@ -28,6 +34,26 @@ public class UploadService {
         return uploadRepository.findAll();
     }
 
+    public Upload saveMetadata(Upload upload) {
+        return this.uploadRepository.save(upload);
+    }
+
+    public ArrayList<String> findFoldersByUsername(String username) {
+        String modifiedString = username + "\\\\";
+        Set<String> paths = uploadRepository.findAllPathsByUser(modifiedString);
+        Pattern pattern = Pattern.compile("\\\\(\\S+)(\\\\)");
+
+        ArrayList<String> results = new ArrayList<>();
+        for(String path : paths) {
+            Matcher matcher = pattern.matcher(path);
+            if(matcher.find()) {
+                results.add(matcher.group(1));
+            }
+        }
+
+        results = (ArrayList<String>)results.stream().distinct().collect(Collectors.toList());
+        return results;
+    }
     public List<Upload> findContaining(String containing){
         return uploadRepository.findByFileNameContainingIgnoreCase(containing);
     }
