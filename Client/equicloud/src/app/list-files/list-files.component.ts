@@ -27,7 +27,7 @@ export class ListFilesComponent {
     this.downloadFileService=downloadServiceService;    
     this.remote=remote;
     if(sessionStorage.getItem("auth-user")==null){
-      window.location.replace("login")
+      window.location.replace("")
     }
     else{
     this.remote.getAllFiles().subscribe({

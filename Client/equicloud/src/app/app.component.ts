@@ -19,7 +19,7 @@ import { RemoteService } from './remote.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'revportal';
+  title = 'equicloud';
   loggedIn = sessionStorage.getItem("auth-user")!=null;
   constructor (private remoteService: RemoteService){}
   logout(){
