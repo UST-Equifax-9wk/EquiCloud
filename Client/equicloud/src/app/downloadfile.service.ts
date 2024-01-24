@@ -11,7 +11,7 @@ export class DownloadfileService {
 
   constructor(private http:HttpClient, remote:RemoteService) {
     this.http = http;
-    this.baseUrl=remote.baseUrl;
+    this.baseUrl = remote.baseUrl;
   }
 
   downloadFile(fileName:string) {
