@@ -1,7 +1,16 @@
 package com.revature.equicloud.dtos;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class AuthenticationRequest {
+
+    @NotBlank(message = "Username must not be blank")
+    @Size(min = 6, message = "Username must be at least 6 characters")
     private String accountName;
+
+    @NotBlank(message = "Password must not be blank")
+    @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
     public String getAccountName() {

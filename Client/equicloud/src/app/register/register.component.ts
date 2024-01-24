@@ -36,13 +36,8 @@ export class RegisterComponent {
     }
     this.remoteService.register(account).subscribe(
       response => {
-<<<<<<< HEAD
-        console.log("Registration Success");
-        window.location.replace("");
-=======
         alert("Registration Success");
         window.location.replace("")
->>>>>>> a55d536c3082cec89383ba22d2909d50d70f0386
       },
       error => {
         this.message="Duplicate username or email"
@@ -50,3 +45,4 @@ export class RegisterComponent {
     );
   }
 }
+  
