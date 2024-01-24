@@ -25,6 +25,8 @@ export class LoginComponent {
       }
     }
 
+
+
   login() {
     console.log("accountName: " + this.accountName)
     console.log("password: " + this.password)

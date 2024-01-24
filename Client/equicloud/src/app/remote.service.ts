@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +9,12 @@ export class RemoteService {
   httpClient : HttpClient
   baseUrl : string
 
+  private registrationMessageSource = new BehaviorSubject<string>('');
+  currentMessage = this.registrationMessageSource.asObservable();
+
   constructor(client: HttpClient) {
     this.httpClient = client
-     this.baseUrl="http://34.125.212.192:7777"
+    this.baseUrl="http://34.125.212.192:7777"
     //this.baseUrl = "http://localhost:8080"
    }
 
@@ -84,6 +87,9 @@ export class RemoteService {
     )
   }
   
+  changeMessage(message: string) {
+    this.registrationMessageSource.next(message);
+  }
 }
 
 
