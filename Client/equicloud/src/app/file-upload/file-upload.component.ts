@@ -18,7 +18,10 @@ export class FileUploadComponent implements OnInit{
     const file: File = event.target.files[0]
     if(file) {
       this.file = file;
+      this.actualFileName = file.name
       console.log('Selected file:', file)
+      const indexOfPeriod = this.actualFileName.indexOf('.')
+      this.fileExtension = indexOfPeriod !== -1 ? this.actualFileName.substring(indexOfPeriod+1) : this.actualFileName
     }
   }
   httpClient = inject(HttpClient)
@@ -26,6 +29,8 @@ export class FileUploadComponent implements OnInit{
   remoteService : RemoteService
   currentUserService : CurrentUserService
   fileName : string = ""
+  actualFileName : string = ""
+  fileExtension : string = ""
   fileDescription : string = ""
   filePath : string = ""
   file : any
@@ -38,7 +43,11 @@ export class FileUploadComponent implements OnInit{
     this.router = router
     this.remoteService = remoteService
     this.currentUserService = currentUserService
-    this.currentUsername = currentUserService.getLoggedInUsername()
+    if(sessionStorage.getItem("auth-user") == null) {
+      window.location.replace("")
+    } else {
+      this.currentUsername = currentUserService.getLoggedInUsername()
+    }
   }
 
   ngOnInit(): void {
@@ -54,6 +63,7 @@ export class FileUploadComponent implements OnInit{
   }
 
   upload() {
+    this.fileName = `${this.fileName}.${this.fileExtension}`
     if(this.newFolder) {
       this.filePath = `/${this.newFolderName}/${this.fileName}`
     } else {
