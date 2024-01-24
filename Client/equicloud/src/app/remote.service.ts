@@ -11,7 +11,7 @@ export class RemoteService {
 
   constructor(client: HttpClient) {
     this.httpClient = client
-     this.baseUrl="https://cors-anywhere.herokuapp.com/http://34.125.212.192:7777"
+     this.baseUrl="http://34.125.212.192:7777"
     //this.baseUrl = "http://localhost:8080"
    }
 
