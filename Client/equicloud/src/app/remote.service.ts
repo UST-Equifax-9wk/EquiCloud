@@ -1,17 +1,17 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RemoteService {
   httpClient : HttpClient
-  baseUrl : String
+  baseUrl : string
 
   constructor(client: HttpClient) {
     this.httpClient = client
-     this.baseUrl="http://34.125.212.192:7777"
+     this.baseUrl="https://cors-anywhere.herokuapp.com/http://34.125.212.192:7777"
     //this.baseUrl = "http://localhost:8080"
    }
 
