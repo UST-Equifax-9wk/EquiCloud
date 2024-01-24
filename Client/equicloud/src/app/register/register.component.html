@@ -2,6 +2,9 @@
        <div class="p-4 border rounded shadow bg-white my-4">
        <form autocomplete="off" name="form" #f="ngForm" (ngSubmit)="f.valid && register()">
               <p class="h4 m-4 d-block text-center ">Registration</p>
+              <div *ngIf="message" class="alert alert-danger" role="alert">
+                     {{ message }}
+                   </div>
               <label>Firstname </label>
               <input type="text" [(ngModel)]= "firstName" name="firstName" class="form-control mb-4 "
                      placeholder="Firstname" 
