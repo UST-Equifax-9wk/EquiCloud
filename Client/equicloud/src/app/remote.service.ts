@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 })
 export class RemoteService {
   httpClient : HttpClient
-  baseUrl : String
+  baseUrl : string
 
   private registrationMessageSource = new BehaviorSubject<string>('');
   currentMessage = this.registrationMessageSource.asObservable();

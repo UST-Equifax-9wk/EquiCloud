@@ -6,8 +6,8 @@
 <br><br><br>
 
 <input type="text" class="form-control" id="fileName" [(ngModel)] = "fileName" placeholder="File name"  pattern="[a-zA-Z.\-_]+"
-       title="Only letters, underscores(_), and hyphens(-), and periods(.) are allowed in file names."
-       onkeypress="return /[a-zA-Z.\-_\s]/i.test(event.key)" maxlength="30" style="width: 30%">
+       title="Only letters, underscores(_), and hyphens(-) are allowed in file names."
+       onkeypress="return /[a-zA-Z\-_\s]/i.test(event.key)" maxlength="30" style="width: 30%">
 <br>
 
 <input type="text" class="form-control" id="fileDescription" [(ngModel)] = "fileDescription" placeholder="Description" style="width: 30%; height: 20vh; vertical-align: top;" maxlength="255">

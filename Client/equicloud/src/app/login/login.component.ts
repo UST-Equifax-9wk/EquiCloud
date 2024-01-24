@@ -19,7 +19,11 @@ export class LoginComponent {
 
   loginMessage: string = '';
   constructor (private remoteService: RemoteService,
-    private router:Router, private currentUserService : CurrentUserService) {}
+    private router:Router, private currentUserService : CurrentUserService) {
+      if(sessionStorage.getItem("auth-user")!=null){
+        window.location.replace("files")
+      }
+    }
 
 
 

@@ -18,9 +18,13 @@ export class RegisterComponent {
   accountName : string = ''
   password : string = ''
   email : string = ''
-
+  message="";
   constructor (private remoteService: RemoteService,
-    private router: Router) {}
+    private router: Router) {
+      if(sessionStorage.getItem("auth-user")!=null){
+        window.location.replace("files")
+      }
+    }
 
   register(){
     let account : AccountDto = {
@@ -32,11 +36,16 @@ export class RegisterComponent {
     }
     this.remoteService.register(account).subscribe(
       response => {
+<<<<<<< HEAD
         console.log("Registration Success");
         window.location.replace("");
+=======
+        alert("Registration Success");
+        window.location.replace("")
+>>>>>>> a55d536c3082cec89383ba22d2909d50d70f0386
       },
       error => {
-        console.log("Registraion failed")
+        this.message="Duplicate username or email"
       }
     );
   }
