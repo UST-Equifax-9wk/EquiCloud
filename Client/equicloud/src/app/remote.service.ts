@@ -7,7 +7,7 @@ import { Observable, tap } from 'rxjs';
 })
 export class RemoteService {
   httpClient : HttpClient
-  baseUrl : String
+  baseUrl : string
 
   constructor(client: HttpClient) {
     this.httpClient = client

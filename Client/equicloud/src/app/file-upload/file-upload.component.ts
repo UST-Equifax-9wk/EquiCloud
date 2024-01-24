@@ -63,6 +63,10 @@ export class FileUploadComponent implements OnInit{
   }
 
   upload() {
+    if(this.fileName == "") {
+      alert("Please provide a file name.")
+      return
+    }
     this.fileName = `${this.fileName}.${this.fileExtension}`
     if(this.newFolder) {
       this.filePath = `/${this.newFolderName}/${this.fileName}`
