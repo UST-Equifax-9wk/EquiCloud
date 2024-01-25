@@ -58,7 +58,6 @@ export class ListFilesComponent {
       error:(error:HttpErrorResponse)=> {
         alert("Error cannot retrieve file: " + file.fileName);
         console.log(error);
-        console.log("Trying this path: " + file.path)
       }
     })
   }
@@ -129,8 +128,6 @@ export class ListFilesComponent {
 
 
   refresh(){
-    console.log(this.search)
-    console.log(this.lastSearch)
     if(this.search==this.lastSearch){
       this.sort();
       return;
@@ -142,7 +139,6 @@ export class ListFilesComponent {
       this.remote.getAllFiles().subscribe({
         next:(data)=>{
           this.populate(data,false);
-          console.log("next")
         },
         error:(error:HttpErrorResponse)=>{
           alert("Error retrieving files");
@@ -217,8 +213,6 @@ export class ListFilesComponent {
           }
           folder.files.sort((a,b)=>a.uploadDate<b.uploadDate ? 1: a.uploadDate>b.uploadDate ? -1:0)
           folder.nested.sort((a,b)=>a.uploadDate<b.uploadDate? 1: a.uploadDate>b.uploadDate ? -1:0)
-          
-
           if(folder.files.length>0){
             if(folder.nested.length>0){
               if(folder.files[0].uploadDate<folder.nested[0].uploadDate)folder.uploadDate=folder.nested[0].uploadDate

@@ -15,7 +15,6 @@
 
 <p>(Optional) Select a folder to place your file in:
 <select [disabled]="newFolder" id="path" [(ngModel)]="filePath" class="form-control" style="width:30%">
-    <!--option value="{{post}}"{{post}}></option-->
     <option *ngFor="let filePath of data" [value]="filePath">{{filePath}}</option>
     <option value=""> </option>
 </select>

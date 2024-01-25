@@ -14,7 +14,9 @@ export class RemoteService {
 
   constructor(client: HttpClient) {
     this.httpClient = client
+    //hosted url
     this.baseUrl="http://34.125.212.192:7777"
+    //local url
     //this.baseUrl = "http://localhost:8080"
    }
 

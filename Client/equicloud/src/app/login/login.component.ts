@@ -28,12 +28,9 @@ export class LoginComponent {
 
 
   login() {
-    console.log("accountName: " + this.accountName)
-    console.log("password: " + this.password)
     this.remoteService.login(this.accountName, this.password).subscribe(
       (response: AuthResponse) => {
         sessionStorage.setItem('auth-user', JSON.stringify(response));
-        console.log("Authentication Success");
         this.currentUserService.setUsername(this.accountName)
         window.location.replace("files")
       },

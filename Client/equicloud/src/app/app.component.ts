@@ -25,7 +25,6 @@ export class AppComponent {
   logout(){
     this.remoteService.logout().subscribe(
       response => {
-        console.log("Logged out successfully");
         sessionStorage.removeItem("auth-user");
         window.location.replace("");
       },
