@@ -23,8 +23,45 @@
 <button id="submitSearch" class="btn btn-outline-primary" (click)="refresh()">Submit</button>
 
 <br><br>
-    
-<table class="table table-fixed no-border-collapse ">
+
+<ng-container *ngTemplateOutlet="Recursion; context:{base:folders}"></ng-container>
+
+<ng-template #Recursion let-base="base">
+    <ng-container *ngFor="let folder of base;index as i">
+         <br>
+        <ng-container *ngIf="!folder.visible"> 
+            <tr>                            
+                <button class="folderButton" (click)="show(folder)"><img src="../../assets/folder.png" alt="folder" width="30">  </button>{{folder.folder}}
+            </tr> 
+        </ng-container>
+                            
+        <ng-container class="visibleFolder"  *ngIf="folder.visible">
+            <tr>                            
+                <button class="folderButton" (click)="show(folder)"><img src="../../assets/folder.png" alt="folder" width="30">  </button>{{folder.folder}}
+            </tr> 
+            <ng-container *ngFor="let file of folder.files">
+                <br>
+                <tr>
+                    <th><button class="btn btn-primary" (click)="download(file)">Download</button></th>
+                    <td>{{file.fileName}}</td>
+                    <td>{{file.description}}</td>
+                    <td>{{file.uploadDate | date:'hh:mm:ss aa'}}&nbsp;On&nbsp; {{file.uploadDate | date}}</td>
+                            
+                </tr>
+                            
+            </ng-container >                                                     
+                <ng-container class="nested"> 
+                    <hr>
+                                   
+                    <ng-container *ngTemplateOutlet="Recursion; context:{base:folder.nested}"></ng-container>
+                    <hr>
+                </ng-container>
+        </ng-container>
+    </ng-container> 
+</ng-template>
+
+
+<!-- <table class="table table-fixed no-border-collapse ">
     <thead style="position:sticky;top:0">
         <tr>
             <th  style="width: 27%"></th>
@@ -75,5 +112,5 @@
             </ng-container>
         </ng-container> 
     </tbody>
-</table>
+</table> -->
         

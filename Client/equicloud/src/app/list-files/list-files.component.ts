@@ -65,6 +65,7 @@ export class ListFilesComponent {
 
   show(folder:Folder){
     folder.visible = !folder.visible;
+    console.log(folder)
   }
 
 
